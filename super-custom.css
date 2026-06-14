@@ -1,0 +1,847 @@
+/* ============================================================================
+   FALLOW BOURNE — Super.so custom CSS
+   Paste into Super → Settings → Custom Code → CSS
+   ----------------------------------------------------------------------------
+   Built on the signed-off design system (FallowBourne_DesignSystem_Cam.pdf §4),
+   extended to a full component layer that targets Super's STABLE classes —
+   never #block-<uuid>. Page-scoped only where a page genuinely differs.
+
+   Authoring convention (set up by Cam, edited by Melis/Ruby):
+     SECTION GROUND        = callout background colour
+       Gray   callout  -> full-bleed light section band (Gentle White)
+       Brown  callout  -> Fallow (tan) accent panel
+       Green  callout  -> Eucalypt section (reversed text)
+       Purple callout  -> Void dark section (reversed text)   [dark code]
+       Pink   callout  -> Mountain Grass accent (reserved, not in beta)
+     ELEMENT HOOKS
+       First H3 in a section callout -> eyebrow / section label
+       Quote block                   -> Fraunces italic pull quote
+       Bold link                     -> Solid button   (colour set by ground)
+       Bold + italic link            -> Hollow button  (colour set by ground)
+       2 columns                     -> two-col grid, 80px gap
+       3 columns                     -> three-col grid, 0.5px dividers, no gap
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&family=Jost:wght@300;400;500&display=swap');
+
+/* ── 1. TOKENS ────────────────────────────────────────────────────────────── */
+:root {
+  --void:            #130A09;
+  --gentle-white:    #FFF8F5;
+  --fallow:          #D6AB88;   /* tan — accent/labels on DARK grounds */
+  --fallow-deep:     #8F5C36;   /* deep sienna — tan-family labels on LIGHT grounds (AA) */
+  --eucalypt:        #5E8F7A;
+  --mountain-grass:  #B1688F;
+
+  --rule-light:        rgba(19, 10, 9, 0.10);
+  --rule-light-strong: rgba(19, 10, 9, 0.12);
+  --rule-dark:         rgba(255, 248, 245, 0.12);
+  --rule-fallow:       rgba(214, 171, 136, 0.18);
+
+  /* Hand-drawn sketch lines (hosted on assets.super.so — permanent URLs).
+     --sketch-fallow = tan line, reads on LIGHT grounds + the void footer.
+     --sketch-light  = pale line, reserved for dark sections if ever needed. */
+  --sketch-fallow: url('https://assets.super.so/284d2508-ccc6-46ac-abf9-1b2b055a49fe/images/c94e099b-9a41-4708-b7a8-3dd0d6b847fa/fallow_sketch_line.svg');
+  --sketch-light:  url('https://assets.super.so/284d2508-ccc6-46ac-abf9-1b2b055a49fe/images/0f83f5da-faf1-4058-86a5-829395c7a4a7/light_fallow_sketch_line.svg');
+
+  --ink-32: rgba(19, 10, 9, 0.32);
+  --ink-38: rgba(19, 10, 9, 0.38);
+  --ink-45: rgba(19, 10, 9, 0.45);
+  --ink-50: rgba(19, 10, 9, 0.50);
+  --paper-28: rgba(255, 248, 245, 0.28);
+  --paper-38: rgba(255, 248, 245, 0.38);
+  --paper-55: rgba(255, 248, 245, 0.55);
+  --paper-65: rgba(255, 248, 245, 0.65);
+
+  --pad-x: 64px;
+  --pad-y: 80px;            /* design system §1.3: 64–80px section padding */
+  --measure: 60ch;          /* readable line length for single-column body */
+
+  /* Buttons are OUTLINE everywhere (per concept); ground sets the accent colour. */
+  --btn-border: var(--void);
+  --btn-text:   var(--void);
+}
+
+/* ── 2. BASE ──────────────────────────────────────────────────────────────── */
+body,
+.super-content,
+.notion-root {
+  background: var(--gentle-white);
+  color: var(--void);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;            /* design system: body is Regular 400, not Light 300 */
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+.notion-text, .notion-text__content { font-weight: 400; }
+
+/* Full-bleed shell — defeat Super's `.notion-root.max-width` ~720px container so
+   section callouts run edge-to-edge. (The narrow column + stacked 2-col rows were
+   both symptoms of this one constraint.) */
+.super-content,
+.super-content-wrapper { max-width: none; width: 100%; }
+.notion-root,
+.notion-root.max-width {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+/* Callout content also un-constrained; section padding (§3) provides the gutters. */
+.notion-root > .notion-callout > .notion-callout__content { max-width: none; }
+
+/* Heroes are authored as section callouts, so hide Notion's default page header
+   (the big "Home"/page-title block). !important beats Super's .notion-header.page. */
+.notion-header { display: none !important; }
+
+/* Headings ------------------------------------------------------------------ */
+h1.notion-heading,
+h2.notion-heading,
+h3.notion-heading {
+  font-family: 'Fraunces', serif;
+}
+h1.notion-heading {
+  font-weight: 900;
+  font-size: clamp(44px, 6vw, 64px);
+  line-height: 0.97;
+  letter-spacing: -0.03em;
+}
+h2.notion-heading {
+  font-weight: 900;
+  font-size: clamp(26px, 4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+h3.notion-heading {
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+/* Fraunces has true italics — emphasis words in headings render as italic. */
+h1.notion-heading em, h2.notion-heading em, h3.notion-heading em { font-style: italic; }
+
+.notion-text { line-height: 1.75; }
+.notion-text__content { max-width: var(--measure); }
+em, i { font-style: italic; }
+strong { font-weight: 500; }
+
+/* ── ACCENT COLOURS (author-driven, scalable) ─────────────────────────────────
+   Colour text in Notion → it maps to a brand colour ANYWHERE. Super emits
+   <span class="highlighted-color color-<name>">. Mapping:
+     Notion yellow → Fallow (tan accent words)
+     Notion pink   → Mountain Grass (e.g. "challenge/tension" section headings) */
+.color-yellow, .highlighted-color.color-yellow { color: var(--fallow) !important; }
+.color-pink,   .highlighted-color.color-pink   { color: var(--mountain-grass) !important; }
+
+/* SKETCH DIVIDERS — two ways to author one, both render as the hand-drawn line:
+   (1) drop the sketch-line IMAGE block (fallow = light grounds, light = dark grounds);
+   (2) type a `---` divider.
+   Super renders a placed image at a narrow default width (~20%); these rules stretch
+   it to a real divider width using the SVG's own ratio (viewBox 2697×197). */
+.notion-image:has(img[src*="sketch_line"]) {
+  width: min(1100px, 90%) !important;
+  max-width: 1100px !important;
+  margin: var(--pad-y) auto !important;
+  opacity: 0.9;
+}
+.notion-image:has(img[src*="sketch_line"]) img {
+  width: 100% !important;
+  height: auto !important;
+}
+/* `---` divider fallback (author-driven). */
+hr.notion-divider, .notion-divider {
+  width: min(1100px, 90%);
+  aspect-ratio: 2697 / 197;
+  height: auto;
+  border: none;
+  background: var(--sketch-fallow) center / contain no-repeat;
+  margin: var(--pad-y) auto;
+  opacity: 0.85;
+}
+/* On dark sections (Void/Eucalypt) the pale variant keeps the line visible. */
+.bg-purple-light hr.notion-divider, .bg-purple-light .notion-divider,
+.bg-green-light hr.notion-divider,  .bg-green-light .notion-divider {
+  background-image: var(--sketch-light);
+}
+
+/* Hide the brown utility toggle (a working/scratch block, not site content). */
+.notion-toggle.bg-brown { display: none !important; }
+
+/* ── 3. SECTION GROUNDS (callout colour → section type) ───────────────────── */
+.notion-callout {
+  display: block;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+}
+.notion-callout > .notion-callout__icon { display: none; }
+.notion-callout > .notion-callout__content { width: 100%; margin: 0; }
+
+/* Any coloured callout becomes a full-bleed section band. */
+.notion-callout.bg-gray-light,
+.notion-callout.bg-brown-light,
+.notion-callout.bg-green-light,
+.notion-callout.bg-purple-light,
+.notion-callout.bg-pink-light {
+  padding: var(--pad-y) var(--pad-x);
+  border-bottom: 0.5px solid var(--rule-light);
+}
+
+.notion-callout.bg-gray-light   { background: var(--gentle-white); }            /* light band */
+.notion-callout.bg-brown-light  { background: var(--fallow);  color: var(--void); }
+.notion-callout.bg-green-light  { background: var(--eucalypt); color: var(--gentle-white); border-bottom-color: var(--rule-dark); }
+.notion-callout.bg-purple-light { background: var(--void);    color: var(--gentle-white); border-bottom-color: var(--rule-dark); }
+.notion-callout.bg-pink-light   { background: var(--mountain-grass); color: var(--gentle-white); }
+
+/* Reversed-text grounds: force children + redefine button + rule colours. */
+.bg-green-light, .bg-green-light .notion-text, .bg-green-light .notion-text__content,
+.bg-purple-light, .bg-purple-light .notion-text, .bg-purple-light .notion-text__content {
+  color: var(--gentle-white);
+}
+
+/* Dark / Eucalypt grounds flip the button accent to Fallow (auto via the cascade). */
+.bg-purple-light, .bg-green-light {
+  --btn-border: var(--fallow);
+  --btn-text:   var(--fallow);
+}
+
+/* A coloured callout INSIDE a column is a panel/card, not a full section band:
+   reset section padding + bottom rule, give it tidy card padding. (Facilitator
+   green card, hero info panel, the Void logistics sub-panel all rely on this.) */
+.notion-column .notion-callout.bg-gray-light,
+.notion-column .notion-callout.bg-brown-light,
+.notion-column .notion-callout.bg-green-light,
+.notion-column .notion-callout.bg-purple-light,
+.notion-column .notion-callout.bg-pink-light {
+  padding: 28px 32px;
+  border-bottom: none;
+}
+
+/* ── 4. EYEBROW (first H3 in a section callout) ───────────────────────────── */
+.notion-callout__content > h3.notion-heading:first-of-type {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;                 /* design system bumped labels 300 -> 400 */
+  font-size: 12px;                  /* nudged up from 10px — read too small live */
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fallow-deep);        /* tan-family on light (AA), not grey ink */
+  margin: 0 0 28px;
+  max-width: none;
+}
+.bg-green-light .notion-callout__content > h3.notion-heading:first-of-type,
+.bg-purple-light .notion-callout__content > h3.notion-heading:first-of-type {
+  color: var(--fallow);             /* lighter tan on dark grounds */
+}
+/* But a nested PANEL callout's first H3 is a card title, not an eyebrow — reset it.
+   (e.g. the "Fallow Bourne" name box, the Shoalhaven facilitator card.) */
+.notion-column .notion-callout .notion-callout__content > h3.notion-heading:first-of-type {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: inherit;
+  margin: 0 0 12px;
+}
+
+/* ── 5. PULL QUOTE ────────────────────────────────────────────────────────── */
+.notion-quote {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.2;
+  border-left: 1.5px solid var(--rule-light-strong);
+  padding-left: 24px;
+  max-width: var(--measure);
+}
+.bg-green-light .notion-quote,
+.bg-purple-light .notion-quote {
+  color: var(--gentle-white);
+  border-left-color: rgba(255, 248, 245, 0.30);
+}
+/* Shoalhaven's "question" (green card INSIDE a facilitators column) is plain Jost,
+   not Fraunces italic — its voice is different (design §2.7). Living World is a green
+   SECTION, not in a column, so it keeps the Fraunces-italic default above. */
+.notion-column .notion-callout.bg-green-light .notion-quote {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* ── 6. BUTTONS — outline (bold link) ─────────────────────────────────────────
+   Concept shows rounded OUTLINE buttons everywhere. Matches both Notion nesting
+   orders (<strong><a> and <a><strong>). Accent colour comes from --btn-* set by
+   the section ground (§3): Void on light, Fallow on dark/eucalypt. */
+strong > a.notion-link.link,
+a.notion-link.link:has(> strong) {
+  display: inline-flex;        /* flex + line-height:1 vertically centres the label */
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-style: normal;
+  padding: 14px 34px;
+  border: 1.5px solid var(--btn-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--btn-text) !important;
+  transition: opacity 0.2s ease;
+}
+strong > a.notion-link.link > strong,
+a.notion-link.link:has(> strong) > strong { font-weight: 400; }
+
+/* Author-driven button colour: colour the LINK TEXT in Notion to recolour the button.
+   yellow -> Fallow, pink -> Mountain Grass; uncoloured stays the ground accent (Void/Fallow). */
+strong > a.notion-link.link:has(.color-yellow),
+a.notion-link.link:has(> strong):has(.color-yellow) { border-color: var(--fallow); color: var(--fallow) !important; }
+strong > a.notion-link.link:has(.color-pink),
+a.notion-link.link:has(> strong):has(.color-pink) { border-color: var(--mountain-grass); color: var(--mountain-grass) !important; }
+
+strong > a.notion-link.link:hover,
+a.notion-link.link:has(> strong):hover { opacity: 0.7; }
+
+/* Plain (non-bold) inline link = quiet text link. MUST be a DIRECT child of the
+   paragraph — a button's <a> lives inside a <strong>, so direct-child scoping keeps
+   this rule off buttons (otherwise it stamped an underline + 0.7 opacity on them). */
+.notion-text__content > a.notion-link.link:not(:has(strong)) {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 0.5px solid currentColor;
+  padding-bottom: 1px;
+  opacity: 0.7;
+}
+
+/* ── 7. COLUMNS / GRIDS ───────────────────────────────────────────────────────
+   Super sizes columns INLINE so they sum to exactly 100%:
+     width: calc((100% - var(--column-spacing) * N) * frac);
+     margin-inline-start: var(--column-spacing);   (on later columns)
+   So NEVER add `gap` or content-box padding — that overflows → columns wrap → stack.
+   Control the gutter through --column-spacing; keep any padding inside via border-box. */
+.notion-column-list {
+  display: flex;
+  align-items: stretch;
+  gap: 0;                /* gutter comes from --column-spacing, NOT gap */
+}
+.notion-column { box-sizing: border-box; }
+
+/* Two columns → 80px gutter, no divider (design §1.3). */
+.notion-column-list:has(> .notion-column:nth-child(2):last-child) { --column-spacing: 80px; }
+
+/* Three+ columns → no gutter, 0.5px dividers with internal padding (design §2.5). */
+.notion-column-list:has(> .notion-column:nth-child(3)) { --column-spacing: 0px; }
+.notion-column-list:has(> .notion-column:nth-child(3)) > .notion-column {
+  padding: 0 40px;
+  border-left: 0.5px solid var(--rule-light);
+}
+.notion-column-list:has(> .notion-column:nth-child(3)) > .notion-column:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+.notion-column-list:has(> .notion-column:nth-child(3)) > .notion-column:last-child {
+  padding-right: 0;
+}
+.bg-green-light .notion-column-list:has(> .notion-column:nth-child(3)) > .notion-column,
+.bg-purple-light .notion-column-list:has(> .notion-column:nth-child(3)) > .notion-column {
+  border-left-color: var(--rule-dark);
+}
+
+/* ── 8. INDEX NUMBERS / ATTRIBUTION / LOGISTICS TABLES ────────────────────── */
+
+/* Index number = a solo bold "01" as the FIRST line of a column (e.g. WHAT WE OFFER).
+   Scoped to :first-child so a fully-bold *paragraph* elsewhere isn't shrunk. */
+.notion-column > .notion-text__content:first-child > strong:only-child {
+  display: inline-block;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 13px;                  /* nudged up from 11px — read too small live */
+  letter-spacing: 0.16em;
+  color: var(--fallow-deep);
+  margin-bottom: 6px;
+}
+.bg-green-light .notion-column > .notion-text__content:first-child > strong:only-child,
+.bg-purple-light .notion-column > .notion-text__content:first-child > strong:only-child {
+  color: var(--fallow);
+}
+
+/* Testimonial attribution = an italic line directly after a pull quote. */
+.notion-quote + .notion-text .notion-text__content em,
+.notion-quote + .notion-text em {
+  font-family: 'Jost', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-38);
+}
+.bg-green-light .notion-quote + .notion-text em,
+.bg-purple-light .notion-quote + .notion-text em { color: var(--paper-38); }
+
+/* Logistics / info panels = a 2-column Notion simple table (header row OFF).
+   NOTE: Super's exact table classes to be confirmed on the live DOM; these are the
+   standard ones. Degrades gracefully to a legible default table if a class differs. */
+.notion-table, .notion-simple-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.notion-table td, .notion-simple-table td,
+.notion-table__cell, .notion-simple-table__cell {
+  border: none;
+  border-top: 0.5px solid var(--rule-light);
+  padding: 12px 0;
+  vertical-align: top;
+}
+.bg-green-light .notion-table td, .bg-purple-light .notion-table td,
+.bg-green-light .notion-table__cell, .bg-purple-light .notion-table__cell,
+.notion-column .bg-purple-light .notion-table td {
+  border-top-color: var(--rule-dark);
+}
+/* First cell in each row = the KEY label */
+.notion-table tr > td:first-child, .notion-simple-table tr > td:first-child,
+.notion-table__row > .notion-table__cell:first-child {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  width: 38%;
+  padding-right: 16px;
+}
+/* Second cell = the VALUE */
+.notion-table tr > td:nth-child(2), .notion-simple-table tr > td:nth-child(2) {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: inherit;
+}
+/* On dark / eucalypt grounds Super sets an inline `color:var(--color-text-default)`
+   (dark) on each <tr>, which makes panel text invisible. Force light, with !important
+   to beat the inline value. Value cell bright; key cell muted. */
+.bg-purple-light .notion-table td, .bg-green-light .notion-table td {
+  color: var(--gentle-white) !important;
+}
+.bg-purple-light .notion-table tr > td:first-child,
+.bg-green-light .notion-table tr > td:first-child { color: var(--paper-55) !important; }
+
+/* ── 9. NAVBAR ────────────────────────────────────────────────────────────── */
+.super-navbar {
+  background: rgba(254, 248, 245, 0.72);   /* #FEF8F5, translucent */
+  backdrop-filter: saturate(1.2) blur(12px);
+  -webkit-backdrop-filter: saturate(1.2) blur(12px);
+  border-bottom: 0.5px solid var(--rule-light-strong);
+  transition: background 0.25s ease, backdrop-filter 0.25s ease;
+}
+/* Solid on hover. */
+.super-navbar:hover {
+  background: #FEF8F5;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.super-navbar__logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 19px;
+  color: var(--void);
+  letter-spacing: -0.02em;
+}
+.super-navbar__item {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+.super-navbar__item:hover,
+.super-navbar__item.is-active,
+.super-navbar__item[aria-current] { color: var(--void); font-weight: 500; }
+
+/* Apply CTA in the navbar = solid button */
+.super-navbar__button, .super-navbar__cta {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--fallow);
+  color: var(--void);
+  border: none;
+  border-radius: 0;
+  padding: 12px 26px;
+}
+
+/* ── 10. FOOTER (site-wide) ────────────────────────────────────────────────────
+   Super renders: logo · divider · footnote (© line) · social icons.
+   The concept footer also wants a hand-drawn sketch line on top, a small
+   "Nature-Based Leadership Practice" tagline, and the Acknowledgement of Country.
+   None of those three are addable inside Super, so they are injected here via CSS:
+     • sketch line       → .super-footer::before
+     • acknowledgement   → .super-footer::after  (verbatim from the design bundle)
+   (The "Nature-Based Leadership Practice" tagline is already baked into the Super
+    logo image, so it is NOT injected here — that would duplicate it.)
+   The Super footer is a centred stack, so everything stacks and centres cleanly. */
+.super-footer {
+  position: relative;
+  background: var(--void);
+  color: var(--gentle-white);
+  padding: var(--pad-y) var(--pad-x);
+  border: none;
+  text-align: center;
+}
+/* Hand-drawn sketch line across the top (tan line on the void ground). Sized by the
+   SVG's own ratio (viewBox 2697×197) so it spans a real width — a fixed height alone
+   lets `contain` collapse it to ~60% of the footer. */
+.super-footer::before {
+  content: '';
+  display: block;
+  width: min(1100px, 90%);
+  aspect-ratio: 2697 / 197;
+  margin: 0 auto var(--pad-y);
+  background: var(--sketch-fallow) center / contain no-repeat;
+  opacity: 0.9;
+}
+.super-footer__logo, .super-footer__logo-image {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--gentle-white);
+}
+/* Super pins the logo container to height:48px, which clips the lockup and throws the
+   stack off-centre. Release the height and scale the logo up. */
+.super-footer.stack .super-footer__logo,
+.super-footer__logo,
+.super-footer__logo-image { height: auto; }
+.super-footer__logo-image img {
+  height: 84px !important;
+  width: auto !important;
+  object-position: center !important;
+}
+/* Super's thin internal divider is redundant once the sketch line + tagline rule
+   provide the structure — hide it so the brand area reads cleanly. */
+.super-footer__divider { display: none; }
+.super-footer__list-heading {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-38);
+}
+.super-footer__link {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--paper-65);
+}
+.super-footer__link:hover { color: var(--gentle-white); }
+.super-footer__footnote {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--paper-55);
+  text-align: center;
+  max-width: 70ch;
+  margin-inline: auto;
+}
+/* Acknowledgement of Country — quiet Jost Light italic footnote, verbatim from the
+   design bundle. Sits beneath the social icons, centred and measure-limited. */
+.super-footer::after {
+  content: 'Fallow Bourne is committed to the rigour, honesty and ecological integrity we ask of our participants. We hold ourselves to the same standard. We arrive at each location as guests. We acknowledge the custodians of the land on which we work, and the ancestral presence of place and body. We do not claim relationships we have not earned.';
+  display: block;
+  max-width: 70ch;
+  margin: var(--pad-y) auto 0;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--paper-55);
+}
+
+/* ── 11. SUBSCRIBE STRIP (dark band above footer — synced block, Purple ground)
+   Headline Fraunces italic; email input + button flush, 0.5px border. */
+.bg-purple-light .notion-quote.subscribe,
+.subscribe-headline {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 700;
+}
+.bg-purple-light input[type="email"],
+.bg-purple-light input[type="text"] {
+  background: transparent;
+  border: 0.5px solid rgba(255, 248, 245, 0.25);
+  border-radius: 0;
+  color: var(--gentle-white);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 14px 16px;
+}
+.bg-purple-light input::placeholder { color: rgba(255, 248, 245, 0.30); }
+
+/* ── 12. PAGE-SCOPED OVERRIDES (only where a page genuinely differs) ───────── */
+/* Home + Offerings open on a DARK hero; Residential + Who We Are open LIGHT.
+   The hero is authored as the first section callout (Purple = dark / Gray = light),
+   so no per-page colour override is needed — kept here as the hook if required. */
+/* #page-index    .notion-callout.bg-purple-light:first-of-type { } */
+/* #page-offerings .notion-callout.bg-purple-light:first-of-type { } */
+
+/* Hero = first section callout on any page. Padding per design system, headline at
+   spec size (NOT inflated). */
+.notion-root > .notion-callout:first-of-type { padding-top: 96px; padding-bottom: 96px; }
+.notion-root > .notion-callout:first-of-type h1.notion-heading {
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 0.97;
+  letter-spacing: -0.03em;
+}
+
+/* ── HERO — Home (dark) — matched to the concept mockup ──────────────────────── */
+/* (Accent word "in service" is Fallow via the global .color-yellow rule above —
+   author coloured it yellow in Notion + kept it italic. No per-hero hack.) */
+
+/* (Hero headline keeps "in service" together via a non-breaking space authored in
+   Notion — so it reflows naturally without splitting the accent phrase.) */
+
+/* Info panel = stacked label / value, NO dividing rules (mockup), labels in Fallow. */
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table,
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table tbody,
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table tr,
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table td,
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table__cell,
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table__wrapper {
+  display: block;
+  border: none !important;
+  padding: 0;
+  width: auto !important;
+  max-width: none !important;
+}
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table tr { margin-bottom: 26px; }
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table td:first-child {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fallow) !important;
+  margin-bottom: 2px;
+}
+#page-index .notion-callout.bg-purple-light:first-of-type .notion-table td:nth-child(2) {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--gentle-white) !important;
+}
+
+/* Hero CTA runs slightly larger than body buttons (colour/border from the default). */
+#page-index .notion-callout.bg-purple-light:first-of-type strong > a.notion-link.link,
+#page-index .notion-callout.bg-purple-light:first-of-type a.notion-link.link:has(> strong) {
+  font-size: 14px;
+  padding: 18px 40px;
+  margin-top: 8px;
+}
+
+/* The Practice (Home, 3rd section) is centred in the mockup.
+   nth-of-type position assumes hero+challenge+practice order — verify live. */
+#page-index .notion-callout:nth-of-type(3) .notion-callout__content { text-align: center; }
+#page-index .notion-callout:nth-of-type(3) .notion-text__content {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+/* ── 13. DECORATIVE LAYER ──────────────────────────────────────────────────────
+   Brand art is DROPPED INTO the relevant callout as a Notion image block (so Super
+   hosts it at assets.super.so); the CSS below positions it. See GRAPHICS.md for the
+   "which asset → which callout" map. Until an image is placed, nothing shows.
+   The testimonial quote-marks (below) are pure CSS and already work. */
+
+/* Sections become a positioning context so absolute art is clipped to the band. */
+.notion-root > .notion-callout { position: relative; }
+
+/* HOME hero (dark) → Bull_Fallow.png, top-right behind the text. The hero is the
+   first block on the page (no room above), so the bull sits just inside the top edge
+   — a large negative top clips it against the navbar. */
+#page-index .notion-callout.bg-purple-light:first-of-type { overflow: visible; }
+#page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image {
+  position: absolute;
+  top: -8px;
+  right: -2%;
+  width: min(48%, 540px);
+  margin: 0;
+  opacity: 0.9;
+  z-index: 0;
+  pointer-events: none;
+}
+#page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+#page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-column-list {
+  position: relative;
+  z-index: 1;
+}
+
+/* HOME "The Practice" (3rd section) → Bull_Black.svg, very faint, right. */
+#page-index .notion-callout:nth-of-type(3) > .notion-callout__content > .notion-image {
+  position: absolute;
+  top: 50%;
+  right: -6%;
+  transform: translateY(-50%);
+  width: min(46%, 520px);
+  margin: 0;
+  opacity: 0.10;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* WHO WE ARE → Living World (green) → Bull_Fallow.png, bottom-right. */
+#page-who-we-are .notion-callout.bg-green-light > .notion-callout__content > .notion-image {
+  position: absolute;
+  bottom: -40px;
+  right: -30px;
+  width: min(40%, 380px);
+  margin: 0;
+  opacity: 0.45;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* OFFERINGS → Bull_Black.svg, faint, LEFT. In the bundle this watermark sits in the
+   "Our offering" LIGHT section (around the Private Sessions row), NOT the dark hero.
+   Drop the bull into the "Our offering" gray callout (the one WITHOUT a quote). The
+   top offset places it near the second row; tune live once it's in. */
+#page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) { overflow: visible; }
+#page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) > .notion-callout__content > .notion-image {
+  position: absolute;
+  top: 34%;
+  left: 4%;
+  width: min(40%, 420px);
+  margin: 0;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+#page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) > .notion-callout__content > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* RESIDENTIAL → The Arc → Descent_Arc.png, inline full-width between intro + phase strip. */
+#page-residential .notion-callout.bg-purple-light > .notion-callout__content > .notion-image {
+  display: block;
+  max-width: 920px;
+  margin: 24px auto 8px;
+}
+
+/* Who We Are → bio portraits — drop Melis/Ruby photos into each bio's LEFT column →
+   circular crop (matches the mockup). */
+#page-who-we-are .notion-column .notion-image {
+  width: 280px;          /* bundle: 280px portrait column */
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 0 24px;
+}
+#page-who-we-are .notion-column .notion-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* TESTIMONIAL = a section-level quote in a gray callout. Per the signed-off concept it
+   is set in JOST (not Fraunces italic), centred, with 72px Fallow quote-marks and an
+   optional squiggle frame (drop Testimonial_squiggle_big.png into the same callout). */
+/* The squiggle hugs the CONTENT box (quote + attribution), not the full padded
+   callout — so the attribution always sits inside the drawn frame. */
+.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content {
+  position: relative;
+}
+.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content > .notion-image {
+  position: absolute;
+  top: -8px; bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(860px, 94%);
+  margin: 0;
+  z-index: 0;
+  pointer-events: none;        /* loose frame; tune width/height live */
+}
+.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content > .notion-image img {
+  width: 100%; height: 100%; object-fit: fill;
+}
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote {
+  position: relative;
+  z-index: 1;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  border-left: none;
+  max-width: 760px;
+  margin: 24px auto;
+  padding: 56px 40px 40px;
+  text-align: center;
+  font-size: clamp(19px, 2.2vw, 26px);
+  line-height: 1.4;
+  color: var(--void);
+}
+/* Big Fallow quote-marks: open top-left, close bottom-right (bundle positions). */
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before,
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after {
+  position: absolute;
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--fallow);
+  z-index: 2;
+}
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before { content: '\201C'; top: 12px; left: 18px; }
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after  { content: '\201D'; bottom: -14px; right: 24px; }
+/* Attribution line under a centred testimonial. */
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Hand-drawn section dividers are now author-driven: drop a divider (`---`) in
+   Notion between two sections and §2 renders it as the sketch line. Homepage is
+   divider-free by design (suppressed in §2). */
+
+/* ── 14. RESPONSIVE ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root { --pad-x: 24px; --pad-y: 48px; }
+  .notion-column-list { flex-direction: column; gap: 32px; }
+  /* Override Super's inline width:50% so stacked columns are full-width. */
+  .notion-column-list > .notion-column {
+    width: 100% !important;
+    margin-inline-start: 0 !important;
+    padding: 0 !important;
+    border-left: none !important;
+  }
+  .notion-text__content { max-width: none; }
+
+  /* Drop heavy background art on small screens so text stays legible. */
+  #page-index .notion-callout.bg-purple-light:first-of-type,
+  #page-who-we-are .notion-callout.bg-green-light,
+  #page-offerings .notion-callout.bg-gray-light:first-of-type,
+  #page-residential .notion-callout.bg-purple-light { background-image: none; }
+  .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote {
+    padding: 40px 24px;
+    background-size: cover;
+  }
+}
