@@ -677,10 +677,10 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image {
   position: absolute;
   top: -8px;
-  right: -2%;
-  width: min(48%, 540px);
+  right: -3%;
+  width: min(42%, 500px);   /* concept: contained top-right, not sprawling */
   margin: 0;
-  opacity: 0.9;
+  opacity: 0.85;
   z-index: 0;
   pointer-events: none;
 }
