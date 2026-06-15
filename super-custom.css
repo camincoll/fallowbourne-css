@@ -589,6 +589,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   color: var(--gentle-white);
   width: 100%;
   padding: var(--pad-y) var(--pad-x);
+  border: none !important;
 }
 .notion-form__wrapper .notion-header.form { display: none; }   /* hide the auto "Subscriptions" title */
 
