@@ -599,6 +599,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   width: 100%;
   padding: var(--pad-y) var(--pad-x);
   border: none !important;
+  border-radius: 0 !important;   /* square band, flush to the footer */
 }
 .notion-form__wrapper .notion-header.form { display: none; }   /* hide the auto "Subscriptions" title */
 
@@ -950,12 +951,24 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   .notion-text__content { max-width: none; }
 
   /* Drop heavy background art on small screens so text stays legible. */
-  #page-index .notion-callout.bg-purple-light:first-of-type,
   #page-who-we-are .notion-callout.bg-green-light,
   #page-offerings .notion-callout.bg-gray-light:first-of-type,
   #page-residential .notion-callout.bg-purple-light { background-image: none; }
+
+  /* HERO — give the in-flow bull room below the navbar; don't pull the title up over
+     it on a narrow screen (the desktop -100px overlap looks cramped here). */
+  #page-index .notion-callout.bg-purple-light:first-of-type { padding-top: 48px; }
+  #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image { margin-bottom: 12px; }
+  #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-column-list { margin-top: 0; }
+
+  /* TESTIMONIAL — drop the squiggle frame; frame the quote with sketch dividers above
+     and below instead, and tuck the quote-marks into the corners. */
+  .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content > .notion-image { display: none; }
   .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote {
-    padding: 40px 24px;
-    background-size: cover;
+    padding: 58px 6px;
+    background: var(--sketch-fallow) top center / 72% auto no-repeat,
+                var(--sketch-fallow) bottom center / 72% auto no-repeat;
   }
+  .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before { top: 18px; left: 2px; font-size: 46px; }
+  .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after  { bottom: 18px; right: 2px; font-size: 46px; }
 }
