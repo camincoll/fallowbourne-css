@@ -58,7 +58,8 @@
   --content-max: 1200px;    /* section backgrounds stay full-bleed; inner content caps here */
   --measure: 60ch;          /* readable line length for single-column body */
 
-  /* Buttons are OUTLINE everywhere (per concept); ground sets the accent colour. */
+  /* Buttons are OUTLINE everywhere (per concept); ground sets the accent colour.
+     Author-driven: a yellow-coloured link → Fallow; a pink-coloured link → Mountain Grass. */
   --btn-border: var(--void);
   --btn-text:   var(--void);
 }
@@ -793,6 +794,9 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 /* WHO THIS IS FOR — dark panel (a bg-purple-light callout nested in the gray section's
    right column). Concept: the prose is Fallow (not white); the "Our Leadership
    Residential…" line is the emphasised CTA — bold Fallow, larger, on its own line. */
+#page-index .notion-callout.bg-gray-light .notion-column .notion-callout.bg-purple-light {
+  border-radius: 40px;
+}
 #page-index .notion-callout.bg-gray-light .notion-column .notion-callout.bg-purple-light .notion-text {
   color: var(--fallow);
 }
