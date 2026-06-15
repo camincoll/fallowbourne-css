@@ -90,6 +90,8 @@ body,
   padding-left: 0;
   padding-right: 0;
 }
+/* No gap below the last block (the subscribe band sits flush to the footer). */
+.notion-root.has-footer { padding-bottom: 0; }
 /* Section BACKGROUNDS stay full-bleed (padding lives on the callout, §3); the inner
    content is capped and centred so it doesn't sprawl on wide screens. */
 .notion-root > .notion-callout > .notion-callout__content {
@@ -596,6 +598,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   text-align: center;
 }
 .notion-form__field-title {
+  width: 100% !important;
   font-family: 'Fraunces', serif;
   font-style: italic;
   font-weight: 700;
@@ -641,8 +644,8 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: var(--fallow);
-  color: var(--void);
+  background: var(--fallow) !important;   /* same Fallow as the title text */
+  color: var(--void) !important;
   border: none;
   border-radius: 8px;
   padding: 16px 40px;
