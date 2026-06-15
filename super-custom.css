@@ -807,8 +807,8 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   font-style: normal;
   border-left: none;
   max-width: 760px;
-  margin: 24px auto;
-  padding: 56px 40px 40px;
+  margin: 24px auto 0;
+  padding: 56px 40px 20px;
   text-align: center;
   font-size: clamp(19px, 2.2vw, 26px);
   line-height: 1.4;
@@ -827,12 +827,18 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 }
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before { content: '\201C'; top: 12px; left: 18px; }
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after  { content: '\201D'; bottom: -14px; right: 24px; }
-/* Attribution line under a centred testimonial. */
+/* Attribution line under a centred testimonial — full width so it truly centres
+   (the 60ch measure on .notion-text__content would otherwise left-bias it), and
+   pulled up close to the quote. */
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text,
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text .notion-text__content {
+  max-width: none;
+}
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text {
   position: relative;
   z-index: 1;
   text-align: center;
-  margin-top: 20px;
+  margin: 6px auto 0;
 }
 
 /* Hand-drawn section dividers are now author-driven: drop a divider (`---`) in
