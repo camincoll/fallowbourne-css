@@ -55,6 +55,7 @@
 
   --pad-x: 64px;
   --pad-y: 80px;            /* design system §1.3: 64–80px section padding */
+  --content-max: 1200px;    /* section backgrounds stay full-bleed; inner content caps here */
   --measure: 60ch;          /* readable line length for single-column body */
 
   /* Buttons are OUTLINE everywhere (per concept); ground sets the accent colour. */
@@ -89,8 +90,12 @@ body,
   padding-left: 0;
   padding-right: 0;
 }
-/* Callout content also un-constrained; section padding (§3) provides the gutters. */
-.notion-root > .notion-callout > .notion-callout__content { max-width: none; }
+/* Section BACKGROUNDS stay full-bleed (padding lives on the callout, §3); the inner
+   content is capped and centred so it doesn't sprawl on wide screens. */
+.notion-root > .notion-callout > .notion-callout__content {
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
 
 /* Heroes are authored as section callouts, so hide Notion's default page header
    (the big "Home"/page-title block). !important beats Super's .notion-header.page. */
@@ -178,7 +183,7 @@ hr.notion-divider, .notion-divider {
   width: 100%;
 }
 .notion-callout > .notion-callout__icon { display: none; }
-.notion-callout > .notion-callout__content { width: 100%; margin: 0; }
+.notion-callout > .notion-callout__content { width: 100%; margin: 0 auto; }
 
 /* Any coloured callout becomes a full-bleed section band. */
 .notion-callout.bg-gray-light,
@@ -699,7 +704,10 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 /* HOME "The Practice" → wave_half_logo: a tan sweep down the RIGHT edge, spanning the
    full section height (concept). Square asset (2849×2541) — size by height, anchor right,
    clip to the band. Targeted by src so it can't drift to the wrong section. */
-#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) {
+/* Anchor + clip the wave to the (capped) content, not the full-bleed section, so it
+   stays behind the right of the text after the content max-width. */
+#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) > .notion-callout__content {
+  position: relative;
   overflow: hidden;
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) {
@@ -834,10 +842,10 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text {
   position: relative;
   z-index: 1;
+  margin-top: -10px;
+  padding-bottom: 60px;
   text-align: center !important;
-  margin-top: -30px;
   max-width: initial !important;
-  padding-bottom: 40px;
 }
 
 /* Hand-drawn section dividers are now author-driven: drop a divider (`---`) in
