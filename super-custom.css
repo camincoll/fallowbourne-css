@@ -670,15 +670,16 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 /* Sections become a positioning context so absolute art is clipped to the band. */
 .notion-root > .notion-callout { position: relative; }
 
-/* HOME hero (dark) → Bull_Fallow.png, top-right behind the text. The hero is the
-   first block on the page (no room above), so the bull sits just inside the top edge
-   — a large negative top clips it against the navbar. */
-#page-index .notion-callout.bg-purple-light:first-of-type { overflow: visible; }
+/* HOME hero (dark) → Bull_Fallow.png. Placement tuned on the LIVE site via dev tools
+   (Cam): the bull renders in flow at the top of the callout (not absolutely positioned),
+   the columns are pulled up over it, and top padding is minimal. My render harness omits
+   the navbar, so I couldn't see the bull clipping behind the transparent nav — these
+   real-site values are the source of truth. */
+#page-index .notion-callout.bg-purple-light:first-of-type {
+  overflow: visible;
+  padding-top: 10px;
+}
 #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image {
-  position: absolute;
-  top: -8px;
-  right: 0;
-  width: min(46%, 540px);   /* concept: head ~mid-right, mane sweeping through the panel */
   margin: 0;
   opacity: 0.85;
   z-index: 0;
@@ -692,6 +693,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-column-list {
   position: relative;
   z-index: 1;
+  margin-top: -100px;
 }
 
 /* HOME "The Practice" → wave_half_logo: a tan sweep down the RIGHT edge, spanning the
