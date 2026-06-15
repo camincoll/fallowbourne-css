@@ -192,13 +192,16 @@ hr.notion-divider, .notion-divider {
 .notion-callout.bg-purple-light,
 .notion-callout.bg-pink-light {
   padding: var(--pad-y) var(--pad-x);
-  border-bottom: 0.5px solid var(--rule-light);
 }
+/* Notion/Super draw a box border on every callout (.notion-callout.border), coloured
+   with Notion's default ground rather than ours — so it shows as an off-colour box on
+   all four sides. Remove it; the full-bleed background bands separate the sections. */
+.notion-callout.border { border: none !important; }
 
 .notion-callout.bg-gray-light   { background: var(--gentle-white); }            /* light band */
 .notion-callout.bg-brown-light  { background: var(--fallow);  color: var(--void); }
-.notion-callout.bg-green-light  { background: var(--eucalypt); color: var(--gentle-white); border-bottom-color: var(--rule-dark); }
-.notion-callout.bg-purple-light { background: var(--void);    color: var(--gentle-white); border-bottom-color: var(--rule-dark); }
+.notion-callout.bg-green-light  { background: var(--eucalypt); color: var(--gentle-white); }
+.notion-callout.bg-purple-light { background: var(--void);    color: var(--gentle-white); }
 .notion-callout.bg-pink-light   { background: var(--mountain-grass); color: var(--gentle-white); }
 
 /* Reversed-text grounds: force children + redefine button + rule colours. */
