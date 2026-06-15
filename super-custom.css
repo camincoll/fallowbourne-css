@@ -829,6 +829,25 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   pointer-events: none;
 }
 
+/* WHO WE ARE hero → the placed Sketchy_Logo renders full-width (720px) and dominates
+   the top. Treat it as the concept's faint hero backdrop: small, faded, behind the text. */
+#page-who-we-are .notion-callout.bg-gray-light:first-of-type { overflow: visible; }
+#page-who-we-are .notion-image:has(img[src*="ketchy" i]) {
+  position: absolute;
+  top: -28px;
+  right: -4%;
+  width: min(46%, 420px);
+  margin: 0;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+#page-who-we-are .notion-image:has(img[src*="ketchy" i]) img { width: 100%; height: auto; display: block; }
+#page-who-we-are .notion-callout.bg-gray-light:first-of-type > .notion-callout__content > :not(.notion-image) {
+  position: relative;
+  z-index: 1;
+}
+
 /* OFFERINGS → Bull_Black.svg, faint, LEFT. In the bundle this watermark sits in the
    "Our offering" LIGHT section (around the Private Sessions row), NOT the dark hero.
    Drop the bull into the "Our offering" gray callout (the one WITHOUT a quote). The
