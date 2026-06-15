@@ -677,8 +677,8 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image {
   position: absolute;
   top: -8px;
-  right: -3%;
-  width: min(42%, 500px);   /* concept: contained top-right, not sprawling */
+  right: 0;
+  width: min(46%, 540px);   /* concept: head ~mid-right, mane sweeping through the panel */
   margin: 0;
   opacity: 0.85;
   z-index: 0;
@@ -694,17 +694,33 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   z-index: 1;
 }
 
-/* HOME "The Practice" (3rd section) → Bull_Black.svg, very faint, right. */
-#page-index .notion-callout:nth-of-type(3) > .notion-callout__content > .notion-image {
+/* HOME "The Practice" → wave_half_logo: a tan sweep down the RIGHT edge, spanning the
+   full section height (concept). Square asset (2849×2541) — size by height, anchor right,
+   clip to the band. Targeted by src so it can't drift to the wrong section. */
+#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) {
+  overflow: hidden;
+}
+#page-index .notion-image:has(img[src*="wave_half_logo"]) {
   position: absolute;
-  top: 50%;
-  right: -6%;
-  transform: translateY(-50%);
-  width: min(46%, 520px);
+  top: 0;
+  bottom: 0;
+  right: -2%;
+  width: auto;
   margin: 0;
-  opacity: 0.10;
+  opacity: 0.28;
   z-index: 0;
   pointer-events: none;
+}
+#page-index .notion-image:has(img[src*="wave_half_logo"]) img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  object-position: right center;
+}
+/* Keep The Practice text above the wave. */
+#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) > .notion-callout__content > :not(.notion-image) {
+  position: relative;
+  z-index: 1;
 }
 
 /* WHO WE ARE → Living World (green) → Bull_Fallow.png, bottom-right. */
