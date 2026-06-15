@@ -70,7 +70,7 @@ body,
   color: var(--void);
   font-family: 'Jost', sans-serif;
   font-weight: 400;            /* design system: body is Regular 400, not Light 300 */
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
 }
@@ -827,18 +827,17 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 }
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before { content: '\201C'; top: 12px; left: 18px; }
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after  { content: '\201D'; bottom: -14px; right: 24px; }
-/* Attribution line under a centred testimonial — full width so it truly centres
-   (the 60ch measure on .notion-text__content would otherwise left-bias it), and
-   pulled up close to the quote. */
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text,
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text .notion-text__content {
-  max-width: none;
-}
+/* Attribution line under a centred testimonial. Values tuned in production by Cam:
+   the `.notion-text__content` 60ch measure (and a Next.js chunk rule) left-bias it and
+   resist override, so !important is required; margin-top pulls it up tight under the
+   quote, padding-bottom gives breathing room before the frame edge. */
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text {
   position: relative;
   z-index: 1;
-  text-align: center;
-  margin: 6px auto 0;
+  text-align: center !important;
+  margin-top: -30px;
+  max-width: initial !important;
+  padding-bottom: 40px;
 }
 
 /* Hand-drawn section dividers are now author-driven: drop a divider (`---`) in
