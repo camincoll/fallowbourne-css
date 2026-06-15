@@ -318,6 +318,14 @@ strong > a.notion-link.link:has(.color-yellow),
 a.notion-link.link:has(> strong):has(.color-yellow) { border-color: var(--fallow); color: var(--fallow) !important; }
 strong > a.notion-link.link:has(.color-pink),
 a.notion-link.link:has(> strong):has(.color-pink) { border-color: var(--mountain-grass); color: var(--mountain-grass) !important; }
+/* Author can also tint the button's PARAGRAPH purple in Notion (bg-purple) — same
+   Mountain-Grass outline; drop the purple highlight so only the outline shows. */
+.notion-text.bg-purple { background: transparent !important; padding-left: 0; padding-right: 0; }
+.notion-text.bg-purple strong > a.notion-link.link,
+.notion-text.bg-purple a.notion-link.link:has(> strong) {
+  border-color: var(--mountain-grass) !important;
+  color: var(--mountain-grass) !important;
+}
 
 strong > a.notion-link.link:hover,
 a.notion-link.link:has(> strong):hover { opacity: 0.7; }
