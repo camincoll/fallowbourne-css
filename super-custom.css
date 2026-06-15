@@ -702,20 +702,19 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -2%;
-  width: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -6%;
+  width: min(62%, 760px);   /* concept: sweep reaches ~mid-width, not just the edge */
   margin: 0;
-  opacity: 0.28;
+  opacity: 0.32;
   z-index: 0;
   pointer-events: none;
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  object-position: right center;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 /* Keep The Practice text above the wave. */
 #page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) > .notion-callout__content > :not(.notion-image) {
