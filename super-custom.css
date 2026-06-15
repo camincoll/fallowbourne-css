@@ -579,26 +579,77 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   color: var(--paper-55);
 }
 
-/* ── 11. SUBSCRIBE STRIP (dark band above footer — synced block, Purple ground)
-   Headline Fraunces italic; email input + button flush, 0.5px border. */
-.bg-purple-light .notion-quote.subscribe,
-.subscribe-headline {
+/* ── 11. SUBSCRIBE band — the page-foot Notion form (.notion-form__wrapper), styled as
+   the concept's full-bleed dark band: Fraunces-italic Fallow headline, soft subhead, a
+   paper input with the submit button flush on the right. */
+.notion-form__wrapper.as-embed {
+  background: var(--void);
+  color: var(--gentle-white);
+  width: 100%;
+  padding: var(--pad-y) var(--pad-x);
+}
+.notion-form__wrapper .notion-header.form { display: none; }   /* hide the auto "Subscriptions" title */
+
+.notion-form.as-embed {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+.notion-form__field-title {
   font-family: 'Fraunces', serif;
   font-style: italic;
   font-weight: 700;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fallow);
+  margin: 0 0 16px;
 }
-.bg-purple-light input[type="email"],
-.bg-purple-light input[type="text"] {
-  background: transparent;
-  border: 0.5px solid rgba(255, 248, 245, 0.25);
-  border-radius: 0;
-  color: var(--gentle-white);
+.notion-form__field-title-required { display: none; }          /* hide the * */
+.notion-form__field-description {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  padding: 14px 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--paper-65);
+  max-width: 46ch;
+  margin: 0 auto 30px;
 }
-.bg-purple-light input::placeholder { color: rgba(255, 248, 245, 0.30); }
+/* Input (paper pill), then the submit button centred below it. The submit button is a
+   sibling of the input's field, so a stacked layout is the robust choice. */
+.notion-form__input-field {
+  width: 100%;
+  background: var(--gentle-white);
+  border: none;
+  border-radius: 8px;
+  color: var(--void);
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  padding: 18px 20px;
+}
+.notion-form__input-field::placeholder { color: var(--ink-45); }
+.notion-form__submit-button {
+  margin: 18px 0 0;
+  display: flex;
+  justify-content: center;
+}
+.notion-form__submit-button .notion-button__content {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--fallow);
+  color: var(--void);
+  border: none;
+  border-radius: 8px;
+  padding: 16px 40px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.notion-form__submit-button .notion-button__content:hover { opacity: 0.85; }
 
 /* ── 12. PAGE-SCOPED OVERRIDES (only where a page genuinely differs) ───────── */
 /* Home + Offerings open on a DARK hero; Residential + Who We Are open LIGHT.
