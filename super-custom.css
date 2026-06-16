@@ -58,10 +58,12 @@
   --content-max: 1200px;    /* section backgrounds stay full-bleed; inner content caps here */
   --measure: 60ch;          /* readable line length for single-column body */
 
-  /* Buttons are OUTLINE everywhere (per concept); ground sets the accent colour.
-     Author-driven: a yellow-coloured link → Fallow; a pink-coloured link → Mountain Grass. */
+  /* Buttons are SOLID by default (primary CTA); colour-tinting the paragraph turns one
+     OUTLINE (secondary). Ground sets the accent: Void on light, Fallow on dark.
+     --btn-border doubles as the solid fill; --btn-fill-text is the contrasting label. */
   --btn-border: var(--void);
   --btn-text:   var(--void);
+  --btn-fill-text: var(--gentle-white);
 }
 
 /* ── 2. BASE ──────────────────────────────────────────────────────────────── */
@@ -213,10 +215,12 @@ hr.notion-divider, .notion-divider {
   color: var(--gentle-white);
 }
 
-/* Dark / Eucalypt grounds flip the button accent to Fallow (auto via the cascade). */
+/* Dark / Eucalypt grounds flip the button accent to Fallow (auto via the cascade);
+   a solid Fallow fill needs a Void label, not the light-ground gentle-white. */
 .bg-purple-light, .bg-green-light {
   --btn-border: var(--fallow);
   --btn-text:   var(--fallow);
+  --btn-fill-text: var(--void);
 }
 
 /* A coloured callout INSIDE a column is a panel/card, not a full section band:
@@ -285,10 +289,12 @@ hr.notion-divider, .notion-divider {
   line-height: 1.4;
 }
 
-/* ── 6. BUTTONS — outline (bold link) ─────────────────────────────────────────
-   Concept shows rounded OUTLINE buttons everywhere. Matches both Notion nesting
-   orders (<strong><a> and <a><strong>). Accent colour comes from --btn-* set by
-   the section ground (§3): Void on light, Fallow on dark/eucalypt. */
+/* ── 6. BUTTONS — solid primary / outline secondary ───────────────────────────
+   Concept: SOLID rounded buttons for primary CTAs, OUTLINE for secondary. Default
+   here is SOLID (filled in the ground accent); tinting the button's paragraph with a
+   colour in Notion subtracts the fill back to an OUTLINE (see the hooks below).
+   Matches both Notion nesting orders (<strong><a> and <a><strong>). Accent comes
+   from --btn-* set by the section ground (§3): Void on light, Fallow on dark/eucalypt. */
 strong > a.notion-link.link,
 a.notion-link.link:has(> strong) {
   display: inline-flex;        /* flex + line-height:1 vertically centres the label */
@@ -305,24 +311,26 @@ a.notion-link.link:has(> strong) {
   padding: 14px 34px;
   border: 1.5px solid var(--btn-border);
   border-radius: 8px;
-  background: transparent;
-  color: var(--btn-text) !important;
+  background: var(--btn-border);            /* SOLID fill = ground accent (primary CTA) */
+  color: var(--btn-fill-text) !important;   /* contrasting label on the fill */
   transition: opacity 0.2s ease;
 }
 strong > a.notion-link.link > strong,
 a.notion-link.link:has(> strong) > strong { font-weight: 400; }
 
-/* Author-driven button colour: colour the LINK TEXT in Notion to recolour the button.
-   yellow -> Fallow, pink -> Mountain Grass; uncoloured stays the ground accent (Void/Fallow). */
+/* Author-driven OUTLINE (secondary): tint the button in Notion to subtract the solid
+   fill back to a hollow outline. yellow -> Fallow, pink -> Mountain Grass; uncoloured
+   stays SOLID in the ground accent (Void/Fallow). */
 strong > a.notion-link.link:has(.color-yellow),
-a.notion-link.link:has(> strong):has(.color-yellow) { border-color: var(--fallow); color: var(--fallow) !important; }
+a.notion-link.link:has(> strong):has(.color-yellow) { background: transparent; border-color: var(--fallow); color: var(--fallow) !important; }
 strong > a.notion-link.link:has(.color-pink),
-a.notion-link.link:has(> strong):has(.color-pink) { border-color: var(--mountain-grass); color: var(--mountain-grass) !important; }
+a.notion-link.link:has(> strong):has(.color-pink) { background: transparent; border-color: var(--mountain-grass); color: var(--mountain-grass) !important; }
 /* Author can also tint the button's PARAGRAPH purple in Notion (bg-purple) — same
-   Mountain-Grass outline; drop the purple highlight so only the outline shows. */
+   Mountain-Grass outline; drop the purple highlight + solid fill so only the outline shows. */
 .notion-text.bg-purple { background: transparent !important; padding-left: 0; padding-right: 0; }
 .notion-text.bg-purple strong > a.notion-link.link,
 .notion-text.bg-purple a.notion-link.link:has(> strong) {
+  background: transparent !important;
   border-color: var(--mountain-grass) !important;
   color: var(--mountain-grass) !important;
 }
@@ -858,18 +866,19 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   z-index: 1;
 }
 
-/* OFFERINGS → Bull_Black.svg, faint, LEFT. In the bundle this watermark sits in the
-   "Our offering" LIGHT section (around the Private Sessions row), NOT the dark hero.
+/* OFFERINGS → Bull_Black.svg, PROMINENT, LEFT. In the concept this drinking bull is a
+   real illustration in the "Our offering" LIGHT section (around the Private Sessions
+   row), not a watermark. Sits behind the left column's whitespace at full strength.
    Drop the bull into the "Our offering" gray callout (the one WITHOUT a quote). The
    top offset places it near the second row; tune live once it's in. */
 #page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) { overflow: visible; }
 #page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) > .notion-callout__content > .notion-image {
   position: absolute;
-  top: 34%;
-  left: 4%;
-  width: min(40%, 420px);
+  top: 30%;
+  left: 1%;
+  width: min(44%, 460px);
   margin: 0;
-  opacity: 0.12;
+  opacity: 0.92;
   z-index: 0;
   pointer-events: none;
 }
