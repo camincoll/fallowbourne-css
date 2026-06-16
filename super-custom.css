@@ -898,10 +898,10 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 #page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content { position: relative; overflow: visible; }
 #page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content > .notion-image {
   position: absolute;
-  top: 0;
+  top: -30%;                 /* desktop (Cam): lift the wave above the hero for a taller sweep */
   right: -4%;
   width: min(54%, 720px);
-  height: 100%;
+  height: 150%;              /* desktop (Cam) */
   margin: 0;
   opacity: 0.5;
   z-index: 0;
@@ -1023,14 +1023,26 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   #page-offerings .notion-callout.bg-gray-light:first-of-type,
   #page-residential .notion-callout.bg-purple-light { background-image: none; }
 
-  /* Arc: keep mobile as-is — the deep desktop overlap (-150px / opacity 0.6 / 50px pad) is for
-     the curve-weaves-columns effect, which doesn't apply once the phases stack vertically. */
+  /* Arc on mobile: no negative margin (Cam) — the curve-weaves-columns effect doesn't apply
+     once the phases stack vertically; full opacity, no extra padding-bottom. */
   #page-residential .notion-callout.bg-purple-light:has(.notion-image) > .notion-callout__content > .notion-image {
-    margin-bottom: -48px;
+    margin-bottom: 0;
     opacity: 1;
   }
   #page-residential .notion-callout.bg-purple-light:has(.notion-image) .notion-column-list:last-of-type {
     padding-bottom: 0;
+  }
+
+  /* Hero wave on mobile: the desktop top:-30% / height:150% would spill above the hero and
+     off the right edge → horizontal scroll. Clip the hero and re-seat the wave fully inside it
+     as a faint right-side backdrop. Conservative starting point — tune from a phone screenshot. */
+  #page-residential .notion-root > .notion-callout:first-of-type { overflow: hidden; }
+  #page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content > .notion-image {
+    top: 0;
+    height: 100%;
+    width: 88%;
+    right: -18%;
+    opacity: 0.25;
   }
 
   /* The Challenge/Practice wave looks stretched on a narrow screen (the tall, thin box
