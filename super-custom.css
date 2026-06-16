@@ -872,14 +872,17 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 #page-residential .notion-callout.bg-purple-light:has(.notion-image) > .notion-callout__content > .notion-image {
   display: block;
   max-width: 920px;
-  margin: 24px auto -48px;
+  margin: 24px auto -150px;   /* desktop (Cam): deep overlap so the curve weaves the phases */
+  opacity: 0.6;               /* desktop: softened (mobile restored below) */
 }
 /* The 5 phase columns sit tighter + raised above the overlapping curve. NO `gap` — Super's
    column width math uses margins, so gap overflows → wrap (see §7 note). Reduce the 3-col
-   divider padding (default 40px → 18px) for "less padding"; keep the outer edges flush. */
+   divider padding (default 40px → 18px) for "less padding"; keep the outer edges flush.
+   padding-bottom gives breathing room below the phases now the image pulls them up hard. */
 #page-residential .notion-callout.bg-purple-light:has(.notion-image) .notion-column-list:last-of-type {
   position: relative;
   z-index: 1;
+  padding-bottom: 50px;       /* desktop (Cam); mobile reset below */
 }
 #page-residential .notion-callout.bg-purple-light:has(.notion-image) .notion-column-list:last-of-type > .notion-column {
   padding-left: 18px;
@@ -1019,6 +1022,16 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   #page-who-we-are .notion-callout.bg-green-light,
   #page-offerings .notion-callout.bg-gray-light:first-of-type,
   #page-residential .notion-callout.bg-purple-light { background-image: none; }
+
+  /* Arc: keep mobile as-is — the deep desktop overlap (-150px / opacity 0.6 / 50px pad) is for
+     the curve-weaves-columns effect, which doesn't apply once the phases stack vertically. */
+  #page-residential .notion-callout.bg-purple-light:has(.notion-image) > .notion-callout__content > .notion-image {
+    margin-bottom: -48px;
+    opacity: 1;
+  }
+  #page-residential .notion-callout.bg-purple-light:has(.notion-image) .notion-column-list:last-of-type {
+    padding-bottom: 0;
+  }
 
   /* The Challenge/Practice wave looks stretched on a narrow screen (the tall, thin box
      distorts the square image under object-fit:fill). Use cover so it keeps its
