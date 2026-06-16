@@ -726,10 +726,14 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   margin-top: 8px;
 }
 
-/* The Practice (Home, 3rd section) is centred in the mockup.
-   nth-of-type position assumes hero+challenge+practice order — verify live. */
-#page-index .notion-callout:nth-of-type(3) .notion-callout__content { text-align: center; }
-#page-index .notion-callout:nth-of-type(3) .notion-text__content {
+/* The Practice (Home) is the ONLY centred gray section. Identify it robustly — a gray
+   callout with no columns and no quote — instead of a fragile nth-of-type (which was
+   wrongly centring The Challenge when the DOM order shifted). The Challenge keeps its
+   default left alignment (it has a column-list). */
+#page-index .notion-callout.bg-gray-light:not(:has(.notion-column-list)):not(:has(.notion-quote)) > .notion-callout__content {
+  text-align: center;
+}
+#page-index .notion-callout.bg-gray-light:not(:has(.notion-column-list)):not(:has(.notion-quote)) .notion-text__content {
   max-width: 60ch;
   margin-inline: auto;
 }
@@ -769,32 +773,37 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   margin-top: -100px;
 }
 
-/* HOME "The Practice" → wave_half_logo: a tan sweep down the RIGHT edge, spanning the
-   full section height (concept). Square asset (2849×2541) — size by height, anchor right,
-   clip to the band. Targeted by src so it can't drift to the wrong section. */
-/* Anchor + clip the wave to the (capped) content, not the full-bleed section, so it
-   stays behind the right of the text after the content max-width. */
+/* HOME — the wave_half_logo lives in The Challenge callout and sweeps behind BOTH
+   The Challenge and The Practice, anchored toward the bottom. It bleeds down out of
+   The Challenge (overflow visible); the next section (The Practice) is made transparent
+   so the wave shows through it. Stretched tall so it flows the full height of the two. */
+#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]),
 #page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) > .notion-callout__content {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+}
+/* The Practice (the gray section directly after The Challenge) → transparent. */
+#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) + .notion-callout.bg-gray-light {
+  background: transparent;
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: -6%;
-  width: min(62%, 760px);   /* concept: sweep reaches ~mid-width, not just the edge */
+  top: 0;
+  right: -5%;
+  width: min(64%, 740px);
+  height: 1060px;            /* spans Challenge + Practice; tune live */
   margin: 0;
-  opacity: 0.32;
+  opacity: 0.42;
   z-index: 0;
   pointer-events: none;
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: fill;          /* stretch tall to flow through both sections */
   display: block;
 }
-/* Keep The Practice text above the wave. */
+/* Keep The Challenge text above the wave. */
 #page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) > .notion-callout__content > :not(.notion-image) {
   position: relative;
   z-index: 1;
@@ -890,26 +899,14 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   border-radius: 50%;
 }
 
-/* TESTIMONIAL = a section-level quote in a gray callout. Per the signed-off concept it
-   is set in JOST (not Fraunces italic), centred, with 72px Fallow quote-marks and an
-   optional squiggle frame (drop Testimonial_squiggle_big.png into the same callout). */
-/* The squiggle hugs the CONTENT box (quote + attribution), not the full padded
-   callout — so the attribution always sits inside the drawn frame. */
+/* TESTIMONIAL — one treatment on ALL screens: JOST quote, centred, framed by a sketch
+   divider above + below (no squiggle frame), with Fallow quote-marks in the corners.
+   Any placed squiggle image is hidden. */
 .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content {
   position: relative;
 }
 .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content > .notion-image {
-  position: absolute;
-  top: -8px; bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(860px, 94%);
-  margin: 0;
-  z-index: 0;
-  pointer-events: none;        /* loose frame; tune width/height live */
-}
-.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content > .notion-image img {
-  width: 100%; height: 100%; object-fit: fill;
+  display: none;
 }
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote {
   position: relative;
@@ -920,34 +917,32 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   border-left: none;
   max-width: 760px;
   margin: 24px auto 0;
-  padding: 56px 40px 20px;
+  padding: 72px 24px;
   text-align: center;
   font-size: clamp(19px, 2.2vw, 26px);
   line-height: 1.4;
   color: var(--void);
+  background: var(--sketch-fallow) top center    / min(560px, 78%) auto no-repeat,
+             var(--sketch-fallow) bottom center / min(560px, 78%) auto no-repeat;
 }
-/* Big Fallow quote-marks: open top-left, close bottom-right (bundle positions). */
+/* Fallow quote-marks tucked into the corners. */
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before,
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after {
   position: absolute;
   font-family: 'Fraunces', serif;
   font-weight: 900;
-  font-size: 72px;
+  font-size: clamp(46px, 5vw, 64px);
   line-height: 1;
   color: var(--fallow);
   z-index: 2;
 }
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before { content: '\201C'; top: 12px; left: 18px; }
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after  { content: '\201D'; bottom: -14px; right: 24px; }
-/* Attribution line under a centred testimonial. Values tuned in production by Cam:
-   the `.notion-text__content` 60ch measure (and a Next.js chunk rule) left-bias it and
-   resist override, so !important is required; margin-top pulls it up tight under the
-   quote, padding-bottom gives breathing room before the frame edge. */
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before { content: '\201C'; top: 26px; left: 6px; }
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after  { content: '\201D'; bottom: 26px; right: 6px; }
+/* Attribution line under the quote (centred; override the 60ch measure that left-biases it). */
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote + .notion-text {
   position: relative;
   z-index: 1;
-  margin-top: -10px;
-  padding-bottom: 60px;
+  margin-top: 14px;
   text-align: center !important;
   max-width: initial !important;
 }
@@ -979,15 +974,5 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   #page-index .notion-callout.bg-purple-light:first-of-type { padding-top: 48px; }
   #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image { margin-bottom: 12px; }
   #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-column-list { margin-top: 0; }
-
-  /* TESTIMONIAL — drop the squiggle frame; frame the quote with sketch dividers above
-     and below instead, and tuck the quote-marks into the corners. */
-  .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-quote) > .notion-callout__content > .notion-image { display: none; }
-  .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote {
-    padding: 58px 6px;
-    background: var(--sketch-fallow) top center / 72% auto no-repeat,
-                var(--sketch-fallow) bottom center / 72% auto no-repeat;
-  }
-  .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::before { top: 18px; left: 2px; font-size: 46px; }
-  .notion-callout.bg-gray-light > .notion-callout__content > .notion-quote::after  { bottom: 18px; right: 2px; font-size: 46px; }
+  /* Testimonial now uses the same sketch-divider treatment on all screens (§13). */
 }
