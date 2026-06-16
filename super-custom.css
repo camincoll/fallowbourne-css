@@ -773,28 +773,30 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   margin-top: -100px;
 }
 
-/* HOME — the wave_half_logo lives in The Challenge callout and sweeps behind BOTH
-   The Challenge and The Practice, anchored toward the bottom. It bleeds down out of
-   The Challenge (overflow visible); the next section (The Practice) is made transparent
-   so the wave shows through it. Stretched tall so it flows the full height of the two. */
+/* HOME — the wave_half_logo lives INSIDE The Practice callout. It is anchored to The
+   Practice's BOTTOM (bottom:0) and sweeps UP through The Challenge above it. The Practice
+   and the Challenge are made transparent, and the wave sits behind everything (z-index:-1)
+   so it shows through both. `height` controls how far up it reaches — tune to the sections.
+   NOTE: requires the wave to be a block INSIDE The Practice section (not above it). */
 #page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]),
 #page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) > .notion-callout__content {
   position: relative;
   overflow: visible;
 }
-/* The Practice (the gray section directly after The Challenge) → transparent. */
-#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) + .notion-callout.bg-gray-light {
+/* The Practice (holds the wave) + The Challenge (the gray section right before it) → transparent. */
+#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]),
+#page-index .notion-callout.bg-gray-light:has(+ .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"])) {
   background: transparent;
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) {
   position: absolute;
-  top: 0;
+  bottom: 0;                 /* anchored to the bottom of The Practice */
   right: -5%;
   width: min(64%, 740px);
-  height: 1060px;            /* spans Challenge + Practice; tune live */
+  height: 1080px;            /* how far up it sweeps through both sections; tune live */
   margin: 0;
   opacity: 0.42;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) img {
@@ -802,11 +804,6 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   height: 100%;
   object-fit: fill;          /* stretch tall to flow through both sections */
   display: block;
-}
-/* Keep The Challenge text above the wave. */
-#page-index .notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-image img[src*="wave_half_logo"]) > .notion-callout__content > :not(.notion-image) {
-  position: relative;
-  z-index: 1;
 }
 
 /* WHO THIS IS FOR — dark panel (a bg-purple-light callout nested in the gray section's
