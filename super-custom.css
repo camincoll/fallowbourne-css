@@ -789,10 +789,10 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 }
 #page-index .notion-image:has(img[src*="wave_half_logo"]) {
   position: absolute;
-  top: 0;                    /* from the top of The Challenge */
+  bottom: -600px;            /* anchored below The Challenge, reaching into The Practice (Cam's tuning) */
   right: -5%;
   width: min(64%, 740px);
-  height: 1080px;            /* tuned so the bottom lands at The Practice's bottom */
+  height: 1000px;
   margin: 0;
   opacity: 0.42;
   z-index: 0;
@@ -969,6 +969,12 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   #page-who-we-are .notion-callout.bg-green-light,
   #page-offerings .notion-callout.bg-gray-light:first-of-type,
   #page-residential .notion-callout.bg-purple-light { background-image: none; }
+
+  /* The Challenge/Practice wave looks stretched on a narrow screen (the tall, thin box
+     distorts the square image under object-fit:fill). Use cover so it keeps its
+     proportions — shows an undistorted vertical sweep — and soften it a touch. */
+  #page-index .notion-image:has(img[src*="wave_half_logo"]) img { object-fit: cover !important; }
+  #page-index .notion-image:has(img[src*="wave_half_logo"]) { width: 78%; opacity: 0.3; }
 
   /* HERO — give the in-flow bull room below the navbar; don't pull the title up over
      it on a narrow screen (the desktop -100px overlap looks cramped here). */
