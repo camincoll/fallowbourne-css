@@ -615,6 +615,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   padding: var(--pad-y) var(--pad-x);
   border: none !important;
   border-radius: 0 !important;   /* square band, flush to the footer */
+  margin-top: 0 !important;      /* kill Notion's default top gap so the band sits flush */
 }
 .notion-form__wrapper .notion-header.form { display: none; }   /* hide the auto "Subscriptions" title */
 
