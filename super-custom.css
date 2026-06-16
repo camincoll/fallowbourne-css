@@ -419,52 +419,51 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 .bg-green-light .notion-quote + .notion-text em,
 .bg-purple-light .notion-quote + .notion-text em { color: var(--paper-38); }
 
-/* Logistics / info panels = a 2-column Notion simple table (header row OFF).
-   NOTE: Super's exact table classes to be confirmed on the live DOM; these are the
-   standard ones. Degrades gracefully to a legible default table if a class differs. */
-.notion-table, .notion-simple-table {
-  border-collapse: collapse;
-  width: 100%;
+/* Logistics / info panels = a 2-column Notion simple table (label | value), header OFF.
+   SITE-WIDE treatment (matches the concept): STACKED — each label sits in small uppercase
+   Fallow ABOVE a larger value, with generous gaps between rows and NO dividing rules.
+   This is the homepage-hero look applied to every table. Collapse the table structure to
+   blocks so the two cells stack vertically rather than sitting side by side in a grid. */
+.notion-table, .notion-table tbody, .notion-table tr,
+.notion-table td, .notion-table__wrapper, .notion-table__cell, .notion-table__row,
+.notion-simple-table, .notion-simple-table tbody, .notion-simple-table tr,
+.notion-simple-table td, .notion-simple-table__cell {
+  display: block;
+  border: none !important;
+  padding: 0;
+  width: auto !important;
+  max-width: none !important;
 }
-.notion-table td, .notion-simple-table td,
-.notion-table__cell, .notion-simple-table__cell {
-  border: none;
-  border-top: 0.5px solid var(--rule-light);
-  padding: 12px 0;
-  vertical-align: top;
-}
-.bg-green-light .notion-table td, .bg-purple-light .notion-table td,
-.bg-green-light .notion-table__cell, .bg-purple-light .notion-table__cell,
-.notion-column .bg-purple-light .notion-table td {
-  border-top-color: var(--rule-dark);
-}
-/* First cell in each row = the KEY label */
+.notion-table tr, .notion-simple-table tr, .notion-table__row { margin-bottom: 26px; }
+/* First cell in each row = the KEY label (Fallow, deepened on light grounds for contrast) */
 .notion-table tr > td:first-child, .notion-simple-table tr > td:first-child,
 .notion-table__row > .notion-table__cell:first-child {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 10px;
-  letter-spacing: 0.14em;
+  font-size: 11px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-45);
-  width: 38%;
-  padding-right: 16px;
+  color: var(--fallow-deep);
+  margin-bottom: 2px;
 }
-/* Second cell = the VALUE */
-.notion-table tr > td:nth-child(2), .notion-simple-table tr > td:nth-child(2) {
+/* Second cell = the VALUE (inherits the ground text colour: Void on light, white on dark) */
+.notion-table tr > td:nth-child(2), .notion-simple-table tr > td:nth-child(2),
+.notion-table__row > .notion-table__cell:nth-child(2) {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 17px;
   color: inherit;
 }
-/* On dark / eucalypt grounds Super sets an inline `color:var(--color-text-default)`
-   (dark) on each <tr>, which makes panel text invisible. Force light, with !important
-   to beat the inline value. Value cell bright; key cell muted. */
-.bg-purple-light .notion-table td, .bg-green-light .notion-table td {
+/* On dark / eucalypt grounds Super sets an inline dark colour on each <tr> that hides the
+   panel. Force a bright value + Fallow label, with !important to beat the inline value. */
+.bg-purple-light .notion-table td, .bg-green-light .notion-table td,
+.bg-purple-light .notion-simple-table td, .bg-green-light .notion-simple-table td {
   color: var(--gentle-white) !important;
 }
 .bg-purple-light .notion-table tr > td:first-child,
-.bg-green-light .notion-table tr > td:first-child { color: var(--paper-55) !important; }
+.bg-green-light .notion-table tr > td:first-child,
+.bg-purple-light .notion-simple-table tr > td:first-child,
+.bg-green-light .notion-simple-table tr > td:first-child { color: var(--fallow) !important; }
 
 /* ── 9. NAVBAR ────────────────────────────────────────────────────────────── */
 .super-navbar {
@@ -700,35 +699,8 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 /* (Hero headline keeps "in service" together via a non-breaking space authored in
    Notion — so it reflows naturally without splitting the accent phrase.) */
 
-/* Info panel = stacked label / value, NO dividing rules (mockup), labels in Fallow. */
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table,
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table tbody,
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table tr,
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table td,
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table__cell,
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table__wrapper {
-  display: block;
-  border: none !important;
-  padding: 0;
-  width: auto !important;
-  max-width: none !important;
-}
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table tr { margin-bottom: 26px; }
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table td:first-child {
-  font-family: 'Jost', sans-serif;
-  font-weight: 400;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--fallow) !important;
-  margin-bottom: 2px;
-}
-#page-index .notion-callout.bg-purple-light:first-of-type .notion-table td:nth-child(2) {
-  font-family: 'Jost', sans-serif;
-  font-weight: 400;
-  font-size: 17px;
-  color: var(--gentle-white) !important;
-}
+/* Info panel (stacked label / value, Fallow labels, no rules) is now the SITE-WIDE table
+   treatment — see §"Logistics / info panels" above. No homepage-specific override needed. */
 
 /* Hero CTA runs slightly larger than body buttons (colour/border from the default). */
 #page-index .notion-callout.bg-purple-light:first-of-type strong > a.notion-link.link,
