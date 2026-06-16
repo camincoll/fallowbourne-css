@@ -325,11 +325,15 @@ strong > a.notion-link.link:has(.color-yellow),
 a.notion-link.link:has(> strong):has(.color-yellow) { background: transparent; border-color: var(--fallow); color: var(--fallow) !important; }
 strong > a.notion-link.link:has(.color-pink),
 a.notion-link.link:has(> strong):has(.color-pink) { background: transparent; border-color: var(--mountain-grass); color: var(--mountain-grass) !important; }
-/* Author can also tint the button's PARAGRAPH purple in Notion (bg-purple) — same
-   Mountain-Grass outline; drop the purple highlight + solid fill so only the outline shows. */
+/* Author tints a button purple in Notion to make it the OUTLINE secondary. The tint can
+   live on the whole PARAGRAPH (.notion-text.bg-purple) OR — when several buttons share one
+   paragraph and only one should be outline — on an inline highlight span wrapping just that
+   link (.highlighted-background.bg-purple). Match either: require only a .bg-purple ancestor
+   plus a button descendant. Drop the purple highlight box + solid fill so only the outline shows. */
 .notion-text.bg-purple { background: transparent !important; padding-left: 0; padding-right: 0; }
-.notion-text.bg-purple strong > a.notion-link.link,
-.notion-text.bg-purple a.notion-link.link:has(> strong) {
+.highlighted-background.bg-purple:has(a.notion-link.link) { background: transparent !important; }
+.bg-purple strong > a.notion-link.link,
+.bg-purple a.notion-link.link:has(> strong) {
   background: transparent !important;
   border-color: var(--mountain-grass) !important;
   color: var(--mountain-grass) !important;
