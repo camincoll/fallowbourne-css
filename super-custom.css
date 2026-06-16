@@ -976,6 +976,20 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   margin-bottom: 12px;
 }
 
+/* WHO WE ARE hero → Eucalypt ground (concept). The Notion callout is gray and its image URL
+   is a volatile signed link (can't reliably flip the callout in Notion), so paint it here and
+   light the text. Eyebrow + headline + subhead all go to gentle-white on the green. */
+#page-who-we-are .notion-root > .notion-callout:first-of-type {
+  background: var(--eucalypt) !important;
+}
+#page-who-we-are .notion-root > .notion-callout:first-of-type,
+#page-who-we-are .notion-root > .notion-callout:first-of-type .notion-text,
+#page-who-we-are .notion-root > .notion-callout:first-of-type .notion-text__content,
+#page-who-we-are .notion-root > .notion-callout:first-of-type h1.notion-heading,
+#page-who-we-are .notion-root > .notion-callout:first-of-type > .notion-callout__content > h3.notion-heading:first-of-type {
+  color: var(--gentle-white) !important;
+}
+
 /* TESTIMONIAL — one treatment on ALL screens: JOST quote, centred, framed by a sketch
    divider above + below (no squiggle frame), with Fallow quote-marks in the corners.
    Any placed squiggle image is hidden. */
