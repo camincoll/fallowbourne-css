@@ -141,9 +141,11 @@ strong { font-weight: 500; }
    Colour text in Notion → it maps to a brand colour ANYWHERE. Super emits
    <span class="highlighted-color color-<name>">. Mapping:
      Notion yellow → Fallow (tan accent words)
-     Notion pink   → Mountain Grass (e.g. "challenge/tension" section headings) */
+     Notion pink   → Mountain Grass (e.g. "challenge/tension" section headings)
+     Notion green  → Eucalypt (e.g. "initiates differently", "the first threshold") */
 .color-yellow, .highlighted-color.color-yellow { color: var(--fallow) !important; }
 .color-pink,   .highlighted-color.color-pink   { color: var(--mountain-grass) !important; }
+.color-green,  .highlighted-color.color-green   { color: var(--eucalypt) !important; }
 
 /* SKETCH DIVIDERS — two ways to author one, both render as the hand-drawn line:
    (1) drop the sketch-line IMAGE block (fallow = light grounds, light = dark grounds);
