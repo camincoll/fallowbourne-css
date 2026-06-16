@@ -864,12 +864,70 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   z-index: 1;
 }
 
-/* RESIDENTIAL → The Arc → Descent_Arc.png, inline full-width between intro + phase strip. */
+/* RESIDENTIAL → The Arc → Descent_Arc.png, inline full-width between intro + phase strip.
+   Negative bottom margin pulls the 5 phase columns up so the curve weaves around them. */
 #page-residential .notion-callout.bg-purple-light > .notion-callout__content > .notion-image {
   display: block;
   max-width: 920px;
-  margin: 24px auto 8px;
+  margin: 24px auto -72px;
 }
+/* The 5 phase columns (Arrival…Return) sit tighter under the arc — less gap + no padding,
+   raised above the overlapping image. */
+#page-residential .notion-callout.bg-purple-light .notion-column-list:last-of-type {
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+#page-residential .notion-callout.bg-purple-light .notion-column-list:last-of-type > .notion-column {
+  padding: 0 !important;
+}
+
+/* RESIDENTIAL HERO → half-wave line graphic. Place the wave as its OWN block directly in the
+   hero callout (NOT inside a column) so it anchors to the whole hero, like the homepage wave.
+   Sweeps the right side behind "Together we make room to fallow". */
+#page-residential .notion-root > .notion-callout:first-of-type { position: relative; overflow: visible; }
+#page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content { position: relative; overflow: visible; }
+#page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content > .notion-image {
+  position: absolute;
+  top: 0;
+  right: -4%;
+  width: min(54%, 720px);
+  height: 100%;
+  margin: 0;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+#page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content > .notion-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: top right;
+  display: block;
+}
+#page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content > :not(.notion-image) {
+  position: relative;
+  z-index: 1;
+}
+
+/* NEXT RESIDENTIAL panel heading = distinct from the other section eyebrows: Eucalypt +
+   bigger. It's the dark panel that contains a table (the ARC is also purple but table-free). */
+#page-residential .notion-callout.bg-purple-light:has(.notion-table) > .notion-callout__content > h3.notion-heading:first-of-type {
+  color: var(--eucalypt) !important;
+  font-size: clamp(15px, 1.6vw, 19px);
+  letter-spacing: 0.16em;
+}
+
+/* FACILITATORS — names bigger, italic questions smaller, green card rounded. Identify the
+   section as the gray callout that contains the nested green Shoalhaven card. */
+#page-residential .notion-callout.bg-gray-light:has(.notion-callout.bg-green-light) .notion-column h3.notion-heading {
+  font-size: clamp(26px, 2.6vw, 32px);
+}
+#page-residential .notion-callout.bg-gray-light:has(.notion-callout.bg-green-light) .notion-column:not(:has(.bg-green-light)) .notion-quote {
+  font-size: clamp(18px, 2vw, 22px);
+}
+/* Nested green facilitator card → rounded corners (matches the concept). */
+.notion-column .notion-callout.bg-green-light { border-radius: 16px; }
 
 /* Who We Are → bio portraits — drop Melis/Ruby photos into each bio's LEFT column →
    circular crop (matches the mockup). */
