@@ -949,7 +949,8 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   font-size: clamp(18px, 2vw, 22px);
 }
 /* Nested green facilitator card → rounded corners (matches the concept). */
-.notion-column .notion-callout.bg-green-light { border-radius: 16px; }
+.notion-column .notion-callout.bg-green-light,
+.notion-column .notion-callout.bg-brown-light { border-radius: 16px; }
 
 /* Who We Are → bio portraits — drop Melis/Ruby photos into each bio's LEFT column →
    circular crop (matches the mockup). */
