@@ -1038,11 +1038,11 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
      as a faint right-side backdrop. Conservative starting point — tune from a phone screenshot. */
   #page-residential .notion-root > .notion-callout:first-of-type { overflow: hidden; }
   #page-residential .notion-root > .notion-callout:first-of-type > .notion-callout__content > .notion-image {
-    top: 0;
-    height: 100%;
-    width: 88%;
-    right: -18%;
-    opacity: 0.25;
+    top: -20%;
+    height: 200%;
+    width: 200%;
+    right: -15%;
+    opacity: 0.6;
   }
 
   /* The Challenge/Practice wave looks stretched on a narrow screen (the tall, thin box
