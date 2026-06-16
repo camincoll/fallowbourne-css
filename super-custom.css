@@ -877,14 +877,13 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
    top offset places it near the second row; tune live once it's in. */
 #page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) { overflow: visible; }
 #page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) > .notion-callout__content > .notion-image {
-  position: absolute;
-  top: 30%;
-  left: 1%;
-  width: min(44%, 460px);
-  margin: 0;
+  /* In-flow (Cam's tuning): negative margins tuck the bull between the offering rows
+     instead of absolutely positioning it. Mobile drops the negative margins below. */
   opacity: 0.92;
   z-index: 0;
   pointer-events: none;
+  margin-bottom: -80px;
+  margin-top: -30px;
 }
 #page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) > .notion-callout__content > * {
   position: relative;
@@ -994,5 +993,12 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   #page-index .notion-callout.bg-purple-light:first-of-type { padding-top: 48px; }
   #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-image { margin-bottom: 12px; }
   #page-index .notion-callout.bg-purple-light:first-of-type > .notion-callout__content > .notion-column-list { margin-top: 0; }
+
+  /* Offerings bull: drop the desktop negative margins on a narrow screen so it sits
+     naturally in flow rather than overlapping the stacked rows. */
+  #page-offerings .notion-callout.bg-gray-light:not(:has(.notion-quote)) > .notion-callout__content > .notion-image {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
   /* Testimonial now uses the same sketch-divider treatment on all screens (§13). */
 }
