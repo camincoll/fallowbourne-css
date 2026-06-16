@@ -835,9 +835,9 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   position: absolute;
   top: -28px;
   right: -4%;
-  width: min(46%, 420px);
+  width: min(66%, 820px);      /* desktop (Cam): larger, more present on the green */
   margin: 0;
-  opacity: 0.12;
+  opacity: 0.42;               /* desktop (Cam) */
   z-index: 0;
   pointer-events: none;
 }
@@ -1059,6 +1059,14 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   #page-who-we-are .notion-callout.bg-green-light,
   #page-offerings .notion-callout.bg-gray-light:first-of-type,
   #page-residential .notion-callout.bg-purple-light { background-image: none; }
+
+  /* WHO WE ARE hero wave on mobile (Cam): full-width, seated lower; clip the hero so the
+     overhang can't cause horizontal scroll. */
+  #page-who-we-are .notion-callout.bg-gray-light:first-of-type { overflow: hidden; }
+  #page-who-we-are .notion-image:has(img[src*="ketchy" i]) {
+    top: 10px;
+    width: min(100%, 820px);
+  }
 
   /* Arc on mobile: no negative margin (Cam) — the curve-weaves-columns effect doesn't apply
      once the phases stack vertically; full opacity, no extra padding-bottom. */
