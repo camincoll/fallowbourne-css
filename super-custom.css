@@ -111,6 +111,12 @@ h1.notion-heading,
 h2.notion-heading,
 h3.notion-heading {
   font-family: 'Fraunces', serif;
+  /* Balance line lengths on every multi-line heading (no-op on single-line ones).
+     CSS can't target "centred" headings directly, so this applies site-wide — which
+     also covers all centred headings. For THE PRACTICE's two equal-length sentences
+     the balanced split lands on the full stop, stacking them (review, Home #5).
+     Progressive enhancement: unsupported browsers fall back to normal wrapping. */
+  text-wrap: balance;
 }
 h1.notion-heading {
   font-weight: 900;
@@ -732,13 +738,6 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 #page-index .notion-callout.bg-gray-light:not(:has(.notion-column-list)):not(:has(.notion-quote)) .notion-text__content {
   max-width: 60ch;
   margin-inline: auto;
-}
-/* Centred section heading → balance the line lengths. For THE PRACTICE's two
-   equal-length sentences the most-balanced 2-line split falls exactly on the full
-   stop, so they sit one above the other with no Notion line-break (review, Home #5).
-   Progressive enhancement: unsupported browsers fall back to normal wrapping. */
-#page-index .notion-callout.bg-gray-light:not(:has(.notion-column-list)):not(:has(.notion-quote)) h2.notion-heading {
-  text-wrap: balance;
 }
 
 /* ── 13. DECORATIVE LAYER ──────────────────────────────────────────────────────
