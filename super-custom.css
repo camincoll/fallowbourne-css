@@ -733,6 +733,13 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   max-width: 60ch;
   margin-inline: auto;
 }
+/* Centred section heading → balance the line lengths. For THE PRACTICE's two
+   equal-length sentences the most-balanced 2-line split falls exactly on the full
+   stop, so they sit one above the other with no Notion line-break (review, Home #5).
+   Progressive enhancement: unsupported browsers fall back to normal wrapping. */
+#page-index .notion-callout.bg-gray-light:not(:has(.notion-column-list)):not(:has(.notion-quote)) h2.notion-heading {
+  text-wrap: balance;
+}
 
 /* ── 13. DECORATIVE LAYER ──────────────────────────────────────────────────────
    Brand art is DROPPED INTO the relevant callout as a Notion image block (so Super
