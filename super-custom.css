@@ -74,7 +74,7 @@ body,
   color: var(--void);
   font-family: 'Jost', sans-serif;
   font-weight: 400;            /* design system: body is Regular 400, not Light 300 */
-  font-size: 18px;
+  font-size: 20px;             /* bumped 18 -> 20: target demographic found 18 too small to read */
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
 }
@@ -241,7 +241,7 @@ hr.notion-divider, .notion-divider {
 .notion-callout__content > h3.notion-heading:first-of-type {
   font-family: 'Jost', sans-serif;
   font-weight: 400;                 /* design system bumped labels 300 -> 400 */
-  font-size: 12px;                  /* nudged up from 10px — read too small live */
+  font-size: 14px;                  /* 10 -> 12 -> 14: still read too small live (review) */
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fallow-deep);        /* tan-family on light (AA), not grey ink */
@@ -790,7 +790,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   width: min(64%, 740px);
   height: 1000px;
   margin: 0;
-  opacity: 0.42;
+  opacity: 0.8;              /* 0.42 -> 0.8: was invisible on cream (review); match testimonial lines */
   z-index: 0;
   pointer-events: none;
 }
@@ -1107,7 +1107,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
      distorts the square image under object-fit:fill). Use cover so it keeps its
      proportions — shows an undistorted vertical sweep — and soften it a touch. */
   #page-index .notion-image:has(img[src*="wave_half_logo"]) img { object-fit: cover !important; }
-  #page-index .notion-image:has(img[src*="wave_half_logo"]) { width: 78%; opacity: 0.3; }
+  #page-index .notion-image:has(img[src*="wave_half_logo"]) { width: 78%; opacity: 0.6; }  /* 0.3 -> 0.6 to match the desktop bump (review) */
 
   /* HERO — give the in-flow bull room below the navbar; don't pull the title up over
      it on a narrow screen (the desktop -100px overlap looks cramped here). */
