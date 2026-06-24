@@ -361,6 +361,15 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   opacity: 0.7;
 }
 
+/* Buttons were hugging the text above them. A button is an inline-flex link, whose
+   vertical margin won't push surrounding lines — so add the top gap to the PARAGRAPH
+   block that wraps the button instead. Match both Notion nesting orders (<strong><a>
+   and <a><strong>). Applies wherever a button paragraph follows content. (review) */
+.notion-text:has(> .notion-text__content > strong > a.notion-link.link),
+.notion-text:has(> .notion-text__content > a.notion-link.link > strong) {
+  margin-top: 28px;
+}
+
 /* ── 7. COLUMNS / GRIDS ───────────────────────────────────────────────────────
    Super sizes columns INLINE so they sum to exactly 100%:
      width: calc((100% - var(--column-spacing) * N) * frac);
@@ -953,6 +962,18 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 }
 #page-residential .notion-callout.bg-gray-light:has(.notion-callout.bg-green-light) .notion-column:not(:has(.bg-green-light)) .notion-quote {
   font-size: clamp(18px, 2vw, 22px);
+}
+/* The green CARD's quote ("Being witnessed…") should match the OTHER facilitator pull
+   quotes in this section — Fraunces italic — but white for the green ground, rather than
+   the plain-Jost "Shoalhaven question" voice set in §5. Scoped to this section, so any
+   other green-card quote keeps its plain-Jost treatment. (review) */
+#page-residential .notion-callout.bg-gray-light:has(.notion-callout.bg-green-light) .notion-column .notion-callout.bg-green-light .notion-quote {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.2;
+  color: var(--gentle-white);
 }
 /* Nested green facilitator card → rounded corners (matches the concept). */
 .notion-column .notion-callout.bg-green-light,
