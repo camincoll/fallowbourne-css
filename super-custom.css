@@ -310,8 +310,8 @@ a.notion-link.link:has(> strong) {
   justify-content: center;
   line-height: 1;
   font-family: 'Jost', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
+  font-weight: 500;                /* review: heavier button label */
+  font-size: 14px;                 /* review: up from 13px */
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
@@ -324,7 +324,7 @@ a.notion-link.link:has(> strong) {
   transition: opacity 0.2s ease;
 }
 strong > a.notion-link.link > strong,
-a.notion-link.link:has(> strong) > strong { font-weight: 400; }
+a.notion-link.link:has(> strong) > strong { font-weight: 500; }   /* match the 500 label weight (review) */
 
 /* Author-driven OUTLINE (secondary): tint the button in Notion to subtract the solid
    fill back to a hollow outline. yellow -> Fallow, pink -> Mountain Grass; uncoloured
@@ -689,8 +689,8 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   display: inline-flex;
   align-items: center;
   font-family: 'Jost', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
+  font-weight: 500;                       /* review: match content buttons */
+  font-size: 14px;                        /* review: up from 13px */
   letter-spacing: 0.12em;
   text-transform: uppercase;
   background: var(--fallow) !important;   /* same Fallow as the title text */
