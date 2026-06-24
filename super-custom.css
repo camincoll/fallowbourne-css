@@ -539,6 +539,42 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   padding: 8px;
 }
 
+/* MOBILE MENU (hamburger overlay) — a SEPARATE component from the desktop navbar
+   (.super-navigation-menu__*, not .super-navbar__item), so none of the rules above
+   reach it and it falls back to Super's defaults (mixed-case system font + grey
+   active pill). Restyle the items to match the desktop nav: uppercase Jost,
+   letter-spaced, ink-50; current/hover item → Void + weight 500 (no grey pill),
+   mirroring .super-navbar__item.is-active. Warm the panel to the site paper. */
+.super-navbar__menu-wrapper,
+.super-navbar__menu { background: var(--gentle-white); }
+
+.super-navigation-menu__item { padding: 16px 24px; }
+.super-navigation-menu__item-content { background: transparent !important; }
+.super-navigation-menu__item-title {
+  margin: 0;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+/* Current page / hover → drop Super's grey pill, deepen to Void + weight 500.
+   (Active-state hooks are best-guess — verify the current-page item live.) */
+.super-navigation-menu__item:hover,
+.super-navigation-menu__item.is-active,
+.super-navigation-menu__item[aria-current],
+.super-navigation-menu__item.is-active .super-navigation-menu__item-content,
+.super-navigation-menu__item[aria-current] .super-navigation-menu__item-content {
+  background: transparent !important;
+}
+.super-navigation-menu__item:hover .super-navigation-menu__item-title,
+.super-navigation-menu__item.is-active .super-navigation-menu__item-title,
+.super-navigation-menu__item[aria-current] .super-navigation-menu__item-title {
+  color: var(--void);
+  font-weight: 500;
+}
+
 /* ── 10. FOOTER (site-wide) ────────────────────────────────────────────────────
    Super renders: logo · divider · footnote (© line) · social icons.
    The concept footer also wants a hand-drawn sketch line on top, a small
