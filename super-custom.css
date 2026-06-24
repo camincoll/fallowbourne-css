@@ -559,18 +559,15 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   text-transform: uppercase;
   color: var(--ink-50);
 }
-/* Current page / hover → drop Super's grey pill, deepen to Void + weight 500.
-   (Active-state hooks are best-guess — verify the current-page item live.) */
+/* Current page / hover → drop Super's grey pill (it paints the item background via
+   --navbar-background-color-hover), deepen to Void + weight 500. Super marks the
+   current item with a plain `.active` class. */
 .super-navigation-menu__item:hover,
-.super-navigation-menu__item.is-active,
-.super-navigation-menu__item[aria-current],
-.super-navigation-menu__item.is-active .super-navigation-menu__item-content,
-.super-navigation-menu__item[aria-current] .super-navigation-menu__item-content {
+.super-navigation-menu__item.active {
   background: transparent !important;
 }
 .super-navigation-menu__item:hover .super-navigation-menu__item-title,
-.super-navigation-menu__item.is-active .super-navigation-menu__item-title,
-.super-navigation-menu__item[aria-current] .super-navigation-menu__item-title {
+.super-navigation-menu__item.active .super-navigation-menu__item-title {
   color: var(--void);
   font-weight: 500;
 }
