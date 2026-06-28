@@ -138,7 +138,7 @@ h3.notion-heading {
 /* Fraunces has true italics — emphasis words in headings render as italic. */
 h1.notion-heading em, h2.notion-heading em, h3.notion-heading em { font-style: italic; }
 
-.notion-text { line-height: 1.75; }
+.notion-text { line-height: 1.5; margin-bottom: 1rem; }
 .notion-text__content { max-width: var(--measure); }
 em, i { font-style: italic; }
 strong { font-weight: 500; }
@@ -247,7 +247,7 @@ hr.notion-divider, .notion-divider {
 .notion-callout__content > h3.notion-heading:first-of-type {
   font-family: 'Jost', sans-serif;
   font-weight: 400;                 /* design system bumped labels 300 -> 400 */
-  font-size: 14px;                  /* 10 -> 12 -> 14: still read too small live (review) */
+  font-size: 16px;                  /* 10 -> 12 -> 14 -> 16: still read too small live (review) */
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fallow-deep);        /* tan-family on light (AA), not grey ink */
@@ -280,6 +280,7 @@ hr.notion-divider, .notion-divider {
   border-left: 1.5px solid var(--rule-light-strong);
   padding-left: 24px;
   max-width: var(--measure);
+  margin-bottom: 20px;
 }
 .bg-green-light .notion-quote,
 .bg-purple-light .notion-quote {
@@ -430,7 +431,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   font-family: 'Jost', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 11px;
+  font-size: 16px;
   letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--ink-38);
@@ -459,7 +460,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 .notion-table__row > .notion-table__cell:first-child {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 14px;                  /* matched to the eyebrow size (review) — was 11px */
+  font-size: 16px;                  /* matched to the eyebrow size (review) — was 11px -> 14px */
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--fallow-deep);
@@ -470,7 +471,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 .notion-table__row > .notion-table__cell:nth-child(2) {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 20px;
   color: inherit;
 }
 /* On dark / eucalypt grounds Super sets an inline dark colour on each <tr> that hides the
@@ -695,7 +696,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 .notion-form__field-description {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 20px;                /* review: up from 16px ("Our stories will help you feel…") */
   line-height: 1.6;
   color: var(--paper-65);
   max-width: 46ch;
@@ -781,6 +782,12 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 #page-index .notion-callout.bg-gray-light:not(:has(.notion-column-list)):not(:has(.notion-quote)) .notion-text__content {
   max-width: 60ch;
   margin-inline: auto;
+}
+/* ...but its eyebrow (the "THE PRACTICE" label) stays LEFT-aligned, against the
+   centred body below it (review). The eyebrow is full-width (max-width:none, §4),
+   so text-align is what positions it. */
+#page-index .notion-callout.bg-gray-light:not(:has(.notion-column-list)):not(:has(.notion-quote)) > .notion-callout__content > h3.notion-heading:first-of-type {
+  text-align: left;
 }
 
 /* ── 13. DECORATIVE LAYER ──────────────────────────────────────────────────────
@@ -1048,6 +1055,14 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   letter-spacing: 0;
   color: var(--fallow);
   margin-bottom: 12px;
+}
+/* WHAT WE STAND FOR → the item headings (under each numeral) drop Fraunces 700 for a
+   quieter Jost Regular 22px (review). Scoped to the column headings so the section
+   eyebrow — the first H3 in the callout, styled in §4 — is untouched. */
+#page-who-we-are .notion-callout.bg-purple-light .notion-column h3.notion-heading {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
 }
 
 /* WHO WE ARE hero → Eucalypt ground (concept). The Notion callout is gray and its image URL
