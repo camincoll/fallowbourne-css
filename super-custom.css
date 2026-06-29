@@ -603,6 +603,55 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   background: var(--sketch-fallow) center / contain no-repeat;
   opacity: 0.9;
 }
+
+/* FOOTER LAYOUT (redesign — Cam) ------------------------------------------------
+   Row 1: logo + social list SIDE BY SIDE. Row 2: declaration (Fallow, centred,
+   §10 below). Row 3: copyright. The content div is a centred wrap-row; flex-basis:
+   100% drops the declaration + copyright onto their own full-width lines while the
+   logo + social share the first line. Source order is logo · copyright · social, so
+   every child is ordered EXPLICITLY (default order 0 would mis-sequence them). */
+.super-footer.stack .super-footer__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 56px;
+  row-gap: 36px;
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+.super-footer__logo           { order: 1; margin: 0; }
+.super-footer__content::after { order: 3; flex-basis: 100%; }   /* declaration (styled in §10) */
+.super-footer__footnote       { order: 4; flex-basis: 100%; }   /* copyright */
+
+/* Social = a VERTICAL list; each link is its icon with the person/brand name beside
+   it. The two LinkedIn icons share one href, so they're told apart by SOURCE ORDER
+   (:nth-child), not href. */
+.super-footer__icons {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.super-footer__icons > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gentle-white);
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s ease;
+}
+.super-footer__icons > a:hover { opacity: 0.7; }
+.super-footer__icons > a svg { width: 22px; height: 22px; flex: none; }
+.super-footer__icons > a:nth-child(1)::after { content: 'Melis'; }
+.super-footer__icons > a:nth-child(2)::after { content: 'Ruby'; }
+.super-footer__icons > a:nth-child(3)::after { content: 'Substack'; }
+
 .super-footer__logo, .super-footer__logo-image {
   font-family: 'Fraunces', serif;
   font-weight: 900;
@@ -615,7 +664,7 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 .super-footer__logo,
 .super-footer__logo-image { height: auto; }
 .super-footer__logo-image img {
-  height: 84px !important;
+  height: 126px !important;          /* 1.5x the previous 84px (redesign) */
   width: auto !important;
   object-position: center !important;
 }
@@ -647,19 +696,21 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   max-width: 70ch;
   margin-inline: auto;
 }
-/* Acknowledgement of Country — quiet Jost Light italic footnote, verbatim from the
-   design bundle. Sits beneath the social icons, centred and measure-limited. */
-.super-footer::after {
+/* Acknowledgement of Country — verbatim from the design bundle. Injected as the
+   content div's ::after (a flex child, §10 layout) so `order:3` seats it BEFORE the
+   copyright. Redesign: body font size, no italics, Fallow, centred. */
+.super-footer__content::after {
   content: 'Fallow Bourne is committed to the rigour, honesty and ecological integrity we ask of our participants. We hold ourselves to the same standard. We arrive at each location as guests. We acknowledge the custodians of the land on which we work, and the ancestral presence of place and body. We do not claim relationships we have not earned.';
   display: block;
   max-width: 70ch;
-  margin: var(--pad-y) auto 0;
+  margin: 0 auto;
   font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  font-style: italic;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--paper-55);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;            /* match body */
+  line-height: 1.6;
+  text-align: center;
+  color: var(--fallow);
 }
 
 /* ── 11. SUBSCRIBE band — the page-foot Notion form (.notion-form__wrapper), styled as
@@ -1197,5 +1248,10 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
     margin-top: 0;
     margin-bottom: 0;
   }
+  /* Footer: the 1.5x logo (126px ≈ 470px wide) overflows a phone — scale it back so it
+     fits, and tighten the row gaps. Logo + social stack naturally via flex-wrap. */
+  .super-footer__logo-image img { height: 72px !important; }
+  .super-footer.stack .super-footer__content { column-gap: 32px; row-gap: 28px; }
+
   /* Testimonial now uses the same sketch-divider treatment on all screens (§13). */
 }
