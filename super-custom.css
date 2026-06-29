@@ -798,6 +798,73 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 }
 .notion-form__submit-button .notion-button__content:hover { opacity: 0.85; }
 
+/* ── 11b. FORM PAGES (Apply / Contact) — integrate the in-page form into the body ──────
+   These pages place a multi-field Notion form as a section, so it inherits the page-foot
+   SUBSCRIBE band styling above (§11): a full-bleed VOID band with every field label blown
+   up to the Fraunces-italic headline meant for the single newsletter field — which reads
+   as a disconnected dark slab. Strip it back to a light, left-aligned form that continues
+   the intro section. Scoped to these two pages so the real subscribe band is untouched. */
+
+/* Pull the form up close under the intro section (reduce the top gap). */
+#page-contact .notion-root > .notion-callout.bg-gray-light,
+#page-apply   .notion-root > .notion-callout.bg-gray-light { padding-bottom: 32px; }
+
+/* The intro heading's tight line-height (0.97) leaves the body text cramped against it —
+   add breathing room between the section heading and the intro paragraph / details. */
+#page-contact .notion-root > .notion-callout.bg-gray-light h1.notion-heading,
+#page-apply   .notion-root > .notion-callout.bg-gray-light h1.notion-heading { margin-bottom: 22px; }
+
+/* Wrapper: drop the void band; sit on the page's light ground; add a bottom margin. */
+#page-contact .notion-form__wrapper.as-embed,
+#page-apply   .notion-form__wrapper.as-embed {
+  background: transparent !important;
+  color: var(--void);
+  padding: 0 var(--pad-x) var(--pad-y);
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+/* Form aligns to the SAME left edge as the intro (content-max, centred); fields held to a
+   readable width and left-aligned (was centred). */
+#page-contact .notion-form.as-embed,
+#page-apply   .notion-form.as-embed {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  text-align: left;
+}
+#page-contact .notion-form__field,
+#page-apply   .notion-form__field { max-width: 560px; margin-bottom: 22px; }
+
+/* Field labels: giant Fraunces headline → quiet left-aligned Jost label, tidy label→input gap. */
+#page-contact .notion-form__field-title,
+#page-apply   .notion-form__field-title {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-align: left;
+  color: var(--void);
+  margin: 0 0 8px;
+  max-width: none;
+}
+/* Inputs: visible on the light ground (white fill + hairline border). */
+#page-contact .notion-form__input-field,
+#page-apply   .notion-form__input-field {
+  background: #fff;
+  border: 1px solid rgba(19, 10, 9, 0.22);
+  color: var(--void);
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 14px 16px;
+}
+/* Submit: left-aligned under the fields (keeps the §11 Fallow fill). */
+#page-contact .notion-form__submit-button,
+#page-apply   .notion-form__submit-button {
+  justify-content: flex-start;
+  margin-top: 28px;
+}
+
 /* ── 12. PAGE-SCOPED OVERRIDES (only where a page genuinely differs) ───────── */
 /* Home + Offerings open on a DARK hero; Residential + Who We Are open LIGHT.
    The hero is authored as the first section callout (Purple = dark / Gray = light),
