@@ -1194,6 +1194,11 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
 /* ── 14. RESPONSIVE ───────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   :root { --pad-x: 24px; --pad-y: 48px; }
+
+  /* Navbar logo sits high on mobile: its image CONTAINER is taller than the <img>, and
+     the img is top-anchored inside it. Make the container a flex box and centre the img,
+     so the logo sits vertically centred in the bar (matches the hamburger). */
+  .super-navbar__logo-image { display: flex; align-items: center; }
   .notion-column-list { flex-direction: column; gap: 32px; }
   /* Override Super's inline width:50% so stacked columns are full-width. */
   .notion-column-list > .notion-column {
