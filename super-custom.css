@@ -506,6 +506,15 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
   color: var(--void);
   letter-spacing: -0.02em;
 }
+/* The navbar logo is an IMAGE (a wide lockup, not the text above). Scale it 1.3x on
+   DESKTOP only — a transform enlarges what's painted without changing the layout box,
+   so the 78px bar height is untouched and nothing reflows. Mobile is left as-is. */
+@media (min-width: 769px) {
+  .super-navbar__logo-image img {
+    transform: scale(1.3);
+    transform-origin: left center;
+  }
+}
 .super-navbar__item,
 .super-navbar__list {
   font-family: 'Jost', sans-serif;
@@ -1248,10 +1257,17 @@ a.notion-link.link:has(> strong):hover { opacity: 0.7; }
     margin-top: 0;
     margin-bottom: 0;
   }
-  /* Footer: the 1.5x logo (126px ≈ 470px wide) overflows a phone — scale it back so it
-     fits, and tighten the row gaps. Logo + social stack naturally via flex-wrap. */
+  /* Footer: stack the columns (logo above social, then declaration, copyright) on
+     phones — flip the content row to a column. Scale the 1.5x logo back so it fits, and
+     tighten the gaps. flex-basis is reset to auto so the column sizes to content. */
   .super-footer__logo-image img { height: 72px !important; }
-  .super-footer.stack .super-footer__content { column-gap: 32px; row-gap: 28px; }
+  .super-footer.stack .super-footer__content {
+    flex-direction: column;
+    column-gap: 32px;
+    row-gap: 28px;
+  }
+  .super-footer__content::after,
+  .super-footer__footnote { flex-basis: auto; }
 
   /* Testimonial now uses the same sketch-divider treatment on all screens (§13). */
 }
